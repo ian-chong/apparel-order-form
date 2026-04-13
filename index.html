@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gendai Soubi Online Orders 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f7fa;
+    --bg2: #eef1f7;
+    --bg3: #ffffff;
+    --bg4: #f0f3f8;
+    --border: rgba(26,86,186,0.12);
+    --border2: rgba(26,86,186,0.22);
+    --accent: #1a56ba;
+    --accent2: #1240a0;
+    --text: #0d1a36;
+    --text2: #3a5080;
+    --text3: #7a90b8;
+    --danger: #d03030;
+    --success: #1e8a50;
+    --radius: 10px;
+    --radius2: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .grain {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 20% 0%, rgba(26,86,186,0.06) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(26,86,186,0.04) 0%, transparent 60%);
+  }
+
+  .page { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  /* Header */
+  .header { text-align: center; padding: 2.5rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .header-badge { display: inline-block; background: var(--accent); color: #ffffff; font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 4px; margin-bottom: 1rem; }
+  .header h1 { font-family: 'Rajdhani', sans-serif; font-size: 2.2rem; font-weight: 700; letter-spacing: 1px; color: var(--text); line-height: 1.2; }
+  .header h1 span { color: var(--accent); }
+  .header-info { margin-top: 1rem; font-size: 13px; color: var(--text2); max-width: 540px; margin-left: auto; margin-right: auto; }
+  .header-info a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(232,201,109,0.3); }
+
+  /* Size Chart */
+  .size-chart-section { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius2); padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+  .section-label { font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .size-chart-toggle { background: none; border: 1px solid var(--border2); color: var(--text2); font-family: 'Nunito', sans-serif; font-size: 13px; padding: 6px 16px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+  .size-chart-toggle:hover { border-color: var(--accent); color: var(--accent); }
+  .size-chart-inner { display: none; margin-top: 1rem; }
+  .size-chart-inner.open { display: block; }
+  .size-diagram { display: flex; align-items: center; gap: 2rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .tshirt-svg { flex-shrink: 0; }
+  .size-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .size-table th { color: var(--accent); font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; font-size: 12px; padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: center; }
+  .size-table td { padding: 6px 10px; text-align: center; border-bottom: 1px solid var(--border); color: var(--text2); }
+  .size-table td:first-child { color: var(--text); font-weight: 600; text-align: left; }
+  .size-table tr:last-child td { border-bottom: none; }
+  .size-note { font-size: 11px; color: var(--text3); margin-top: 8px; }
+
+  /* Form sections */
+  .form-section { margin-bottom: 1.5rem; }
+  .form-section-header { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .form-section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* Input styles */
+  .field { margin-bottom: 1.25rem; }
+  .field label { display: block; font-size: 13px; font-weight: 600; color: var(--text2); margin-bottom: 6px; letter-spacing: 0.3px; }
+  .field label .req { color: var(--accent2); margin-left: 3px; }
+  .field input[type=text], .field input[type=email], .field textarea, .field select {
+    width: 100%; background: var(--bg4); border: 1px solid var(--border2); border-radius: var(--radius);
+    color: var(--text); font-family: 'Nunito', sans-serif; font-size: 14px; padding: 10px 14px;
+    outline: none; transition: border-color 0.2s;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .field select option { background: var(--bg4); }
+
+  /* Design grid */
+  .designs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-bottom: 1.5rem; }
+  .design-card {
+    background: var(--bg3); border: 1.5px solid var(--border); border-radius: var(--radius2);
+    cursor: pointer; transition: all 0.2s; overflow: hidden; position: relative;
+  }
+  .design-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .design-card.selected { border-color: var(--accent); }
+  .design-card.selected::after {
+    content: '✓'; position: absolute; top: 8px; right: 8px; width: 22px; height: 22px;
+    background: var(--accent); color: #ffffff; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 12px; font-weight: 800;
+    line-height: 22px; text-align: center;
+  }
+  .design-img-wrap { height: 160px; overflow: hidden; background: var(--bg4); display: flex; align-items: center; justify-content: center; }
+  .design-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  .design-img-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--text3); font-size: 11px; text-align: center; padding: 8px; }
+  .design-img-placeholder .placeholder-icon { font-size: 32px; opacity: 0.3; }
+  .design-card-body { padding: 10px 12px; }
+  .design-name { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 0.5px; color: var(--text); line-height: 1.2; }
+  .design-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+  /* Order item (appears when design selected) */
+  .order-items { display: flex; flex-direction: column; gap: 14px; }
+  .order-item {
+    background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius2);
+    padding: 1rem 1.25rem; animation: slideIn 0.25s ease;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .order-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 12px; }
+  .order-item-title { font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; color: var(--accent); }
+  .order-item-sub { font-size: 12px; color: var(--text3); margin-top: 1px; }
+  .remove-btn { background: none; border: 1px solid rgba(224,82,82,0.3); color: #e05252; font-size: 12px; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
+  .remove-btn:hover { background: rgba(224,82,82,0.1); border-color: #e05252; }
+
+  .order-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 12px; }
+  .order-field { display: flex; flex-direction: column; gap: 5px; }
+  .order-field label { font-size: 12px; color: var(--text2); font-weight: 600; letter-spacing: 0.3px; }
+  .order-field select, .order-field input {
+    background: var(--bg4); border: 1px solid var(--border2); border-radius: 8px;
+    color: var(--text); font-family: 'Nunito', sans-serif; font-size: 13px; padding: 7px 10px;
+    outline: none; transition: border-color 0.2s; min-width: 80px;
+  }
+  .order-field select:focus, .order-field input:focus { border-color: var(--accent); }
+
+  /* Variant sub-selector (e.g. BG3 classes) */
+  .variant-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; margin-top: 8px; }
+  .variant-btn {
+    background: var(--bg4); border: 1px solid var(--border); border-radius: 8px;
+    padding: 6px 8px; cursor: pointer; text-align: center; font-size: 12px;
+    color: var(--text2); transition: all 0.2s; font-family: 'Nunito', sans-serif;
+  }
+  .variant-btn:hover { border-color: var(--border2); color: var(--text); }
+  .variant-btn.selected { border-color: var(--accent); color: var(--accent); background: rgba(26,86,186,0.07); }
+  .variant-label { font-size: 12px; color: var(--text2); font-weight: 600; margin-bottom: 5px; }
+
+  /* Print position toggle */
+  .print-pos { display: flex; gap: 8px; }
+  .pos-btn {
+    flex: 1; background: var(--bg4); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px; cursor: pointer; text-align: center; transition: all 0.2s; font-family: 'Nunito', sans-serif;
+  }
+  .pos-btn:hover { border-color: var(--border2); }
+  .pos-btn.selected { border-color: var(--accent); background: rgba(26,86,186,0.07); }
+  .pos-btn .pos-icon { font-size: 18px; margin-bottom: 2px; display: block; }
+  .pos-btn .pos-label { font-size: 12px; color: var(--text2); font-weight: 600; }
+  .pos-btn.selected .pos-label { color: var(--accent); }
+
+  /* Size inline chart popup */
+  .size-inline { background: var(--bg4); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-top: 8px; font-size: 12px; }
+  .size-inline table { width: 100%; border-collapse: collapse; }
+  .size-inline th { color: var(--accent); font-size: 11px; letter-spacing: 1px; text-align: center; padding: 3px 6px; }
+  .size-inline td { color: var(--text2); text-align: center; padding: 3px 6px; border-top: 1px solid var(--border); }
+  .size-inline td:first-child { color: var(--text); text-align: left; }
+  .size-info-btn { background: none; border: 1px solid var(--border); color: var(--text3); font-size: 11px; padding: 3px 8px; border-radius: 4px; cursor: pointer; font-family: 'Nunito', sans-serif; margin-left: 6px; transition: all 0.2s; }
+  .size-info-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Submit section */
+  .submit-section { margin-top: 2rem; background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius2); padding: 1.5rem; }
+  .submit-btn {
+    width: 100%; background: var(--accent); color: #ffffff; font-family: 'Rajdhani', sans-serif;
+    font-size: 18px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    border: none; border-radius: var(--radius); padding: 14px; cursor: pointer;
+    transition: all 0.2s; margin-top: 1rem;
+  }
+  .submit-btn:hover { background: var(--accent2); transform: translateY(-1px); }
+  .submit-btn:active { transform: translateY(0); }
+
+  .empty-state { text-align: center; padding: 2rem; color: var(--text3); font-size: 14px; border: 1px dashed var(--border); border-radius: var(--radius2); margin-bottom: 1rem; }
+  .empty-state .empty-icon { font-size: 28px; margin-bottom: 6px; opacity: 0.4; }
+
+  /* Toast */
+  .toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--success); color: #fff; padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; z-index: 999; transition: transform 0.3s ease; pointer-events: none; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 500px) {
+    .designs-grid { grid-template-columns: repeat(2, 1fr); }
+    .order-row { flex-direction: column; }
+    .order-field { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge">Print on Demand</div>
+    <h1>Gendai Soubi<br><span>Online Orders 2026</span></h1>
+    <div class="header-info">
+      An email will be sent regarding payment and total price. Once confirmed, allow <strong>11–14 business days</strong> for printing and shipping (Malaysia &amp; Singapore). International orders may take longer.<br><br>
+      <a href="https://drive.google.com/file/d/1x5p3T73bHh3iFJ67010U6wb53WscbFWb/view" target="_blank">&gt;&gt; View Digital Catalog &lt;&lt;</a><br><br>
+      Final product colour may differ slightly from images shown.
+    </div>
+  </div>
+
+  <!-- Size Chart -->
+  <div class="size-chart-section">
+    <div class="section-label">Size Chart</div>
+    <button class="size-chart-toggle" onclick="toggleSizeChart()">📐 View Size Chart &amp; Measurements</button>
+    <div class="size-chart-inner" id="sizeChartInner">
+      <div class="size-diagram">
+        <svg class="tshirt-svg" width="110" height="100" viewBox="0 0 110 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M35 10 L15 30 L25 35 L25 90 L85 90 L85 35 L95 30 L75 10 Q65 18 55 18 Q45 18 35 10Z" stroke="#1a56ba" stroke-width="1.5" fill="rgba(26,86,186,0.05)"/>
+          <line x1="30" y1="35" x2="80" y2="35" stroke="#f0a830" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="55" y1="35" x2="55" y2="88" stroke="#e05252" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="55" y="8" text-anchor="middle" font-size="9" fill="#3a5080" font-family="Nunito">Shoulder</text>
+          <text x="16" y="60" text-anchor="middle" font-size="8" fill="#1a56ba" font-family="Nunito" transform="rotate(-90,16,60)">Chest</text>
+          <text x="98" y="65" text-anchor="middle" font-size="8" fill="#d03030" font-family="Nunito" transform="rotate(90,98,65)">Length</text>
+        </svg>
+        <div style="flex:1; min-width: 220px;">
+          <table class="size-table">
+            <thead>
+              <tr><th>Size</th><th>S</th><th>M</th><th>L</th><th>XL</th><th>2XL</th><th>3XL</th><th>5XL</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Chest</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>26</td></tr>
+              <tr><td>Length</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td>33</td></tr>
+              <tr><td>Shoulder</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>24</td></tr>
+            </tbody>
+          </table>
+          <p class="size-note">* Measurements in inches &nbsp;·&nbsp; Tolerance ±0.5 inch</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customer Info -->
+  <div class="form-section">
+    <div class="form-section-header">Your Details</div>
+    <div class="field">
+      <label>Full Name <span class="req">*</span></label>
+      <input type="text" id="custName" placeholder="e.g. Amir bin Hassan">
+    </div>
+    <div class="field">
+      <label>Email Address <span class="req">*</span></label>
+      <input type="email" id="custEmail" placeholder="your@email.com">
+    </div>
+    <div class="field">
+      <label>Shipping Country <span class="req">*</span></label>
+      <select id="custCountry">
+        <option value="">Select country...</option>
+        <option>Malaysia</option>
+        <option>Singapore</option>
+        <option>Indonesia</option>
+        <option>Thailand</option>
+        <option>Philippines</option>
+        <option>Other (International)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Design Selector -->
+  <div class="form-section">
+    <div class="form-section-header">Select Designs</div>
+    <p style="font-size:13px; color:var(--text3); margin-bottom:1rem;">Click a design to add it to your order. You can select multiple.</p>
+    <div class="designs-grid" id="designsGrid"></div>
+  </div>
+
+  <!-- Order Summary (dynamic) -->
+  <div class="form-section" id="orderSummarySection" style="display:none;">
+    <div class="form-section-header">Your Order</div>
+    <div class="order-items" id="orderItems"></div>
+  </div>
+
+  <!-- Additional Notes -->
+  <div class="form-section">
+    <div class="form-section-header">Additional Notes</div>
+    <div class="field">
+      <label>Any other requests?</label>
+      <textarea id="extraNotes" placeholder="e.g. gift wrapping, special instructions..."></textarea>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <div class="submit-section">
+    <div id="orderEmptyMsg" class="empty-state">
+      <div class="empty-icon">👕</div>
+      Select at least one design above to place your order.
+    </div>
+    <button class="submit-btn" id="submitBtn" onclick="submitOrder()">Submit Order</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">Order submitted! We'll be in touch soon.</div>
+
+<script>
+const SIZES = ['S','M','L','XL','2XL','3XL','5XL'];
+const SIZES_CHEST = [19,20,21,22,23,24,26];
+const SIZES_LENGTH = [26,27,28,29,30,31,33];
+const SIZES_SHOULDER = [17,18,19,20,21,22,24];
+
+const DESIGNS = [
+  { id:'gundam-aerial', name:'Gundam Aerial', color:'Black', img:'images/gundam-aerial.jpg', category:'anime' },
+  { id:'dmc-black', name:'Devil May Cry', color:'Black', img:'images/dmc-black.jpg', category:'game' },
+  { id:'kingdom-hearts', name:'Kingdom Hearts', color:'Dark Heather Gray', img:'images/kingdom-hearts.jpg', category:'game' },
+  { id:'final-fantasy', name:'Final Fantasy', color:'Dark Heather Gray', img:'images/final-fantasy.jpg', category:'anime' },
+  { id:'studio-ghibli', name:'Studio Ghibli', color:'Navy', img:'images/studio-ghibli.jpg', category:'anime' },
+  { id:'evangelion', name:'Evangelion', color:'Black', img:'images/evangelion.jpg', category:'anime' },
+  { id:'hades', name:'Hades', color:'Black', img:'images/hades.jpg', category:'game' },
+  { id:'zelda-botw', name:'Zelda BOTW', color:'Black', img:'images/zelda-botw.jpg', category:'game' },
+  { id:'god-of-war', name:'God of War', color:'Black', img:'images/god-of-war.jpg', category:'game' },
+  { id:'black-myth', name:'Black Myth Wukong', color:'Black', img:'images/black-myth.jpg', category:'game' },
+  { id:'bg3-front', name:"Baldur's Gate 3", color:'Black', img:'images/bg3-front.jpg', category:'game', hasVariants: true, variantType:'front', variants:["BG3 Logo","Rogue","Paladin","Barbarian","Fighter","Druid","Sorcerer","Monk","Ranger","Cleric","Bard","Warlock","Wizard"] },
+  { id:'bg3-back', name:"Baldur's Gate 3", color:'Black', img:'images/bg3-back.jpg', category:'game', hasVariants: true, variantType:'back', variants:["Colored","Gold"], variantLabel:'Back Print Variant' },
+  { id:'monster-hunter', name:'Monster Hunter', color:'Black', img:'images/monster-hunter.jpg', category:'game' },
+  { id:'mgs-vintage', name:'MGS Vintage', color:'Army Green', img:'images/mgs-vintage.jpg', category:'game' },
+  { id:'mgs-black', name:'MGS Black', color:'Black', img:'images/mgs-black.jpg', category:'game' },
+  { id:'rocketboo-yellow', name:'Rocketboo', color:'Yellow', img:'images/rocketboo-yellow.jpg', category:'original' },
+  { id:'rocketboo-heather', name:'Rocketboo', color:'Heather', img:'images/rocketboo-heather.jpg', category:'original' },
+  { id:'dmc-dante', name:'DMC Dante', color:'Black', img:'images/dmc-dante.jpg', category:'game' },
+  { id:'dmc-vergil', name:'DMC Vergil', color:'Black', img:'images/dmc-vergil.jpg', category:'game' },
+  { id:'kpop-demon', name:'KPOP Demon Hunters', color:'White', img:'images/kpop-demon.jpg', category:'kpop' },
+];
+
+const categoryColors = {
+  anime: '#6a9fd8', game: '#c46bb2', original: '#5dbf87', kpop: '#e87878'
+};
+
+let selectedDesigns = {};
+
+function renderDesigns() {
+  const grid = document.getElementById('designsGrid');
+  grid.innerHTML = DESIGNS.map(d => {
+    const badge = d.hasVariants ? `<span style="font-size:10px;background:rgba(26,86,186,0.1);color:var(--accent);padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block;">Has variants</span>` : '';
+    const catDot = `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${categoryColors[d.category]};margin-right:4px;vertical-align:middle;"></span>`;
+    return `<div class="design-card${selectedDesigns[d.id] ? ' selected' : ''}" onclick="toggleDesign('${d.id}')" id="card-${d.id}">
+      <div class="design-img-wrap">
+        ${d.img ? `<img src="${d.img}" alt="${d.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">` : ''}
+        ${!d.img ? `<div class="design-img-placeholder"><div class="placeholder-icon">👕</div><span>${d.name}</span></div>` : ''}
+      </div>
+      <div class="design-card-body">
+        <div class="design-name">${d.name}</div>
+        <div class="design-sub">${catDot}${d.color}${d.variantType ? ' · '+d.variantType+' print' : ''}</div>
+        ${badge}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleDesign(id) {
+  if (selectedDesigns[id]) {
+    delete selectedDesigns[id];
+  } else {
+    const d = DESIGNS.find(x => x.id === id);
+    selectedDesigns[id] = {
+      design: d,
+      size: '',
+      qty: 1,
+      position: 'Chest',
+      variant: d.hasVariants ? '' : null
+    };
+  }
+  document.getElementById('card-'+id).classList.toggle('selected', !!selectedDesigns[id]);
+  renderOrderItems();
+}
+
+function renderOrderItems() {
+  const section = document.getElementById('orderSummarySection');
+  const container = document.getElementById('orderItems');
+  const emptyMsg = document.getElementById('orderEmptyMsg');
+  const keys = Object.keys(selectedDesigns);
+
+  if (keys.length === 0) {
+    section.style.display = 'none';
+    emptyMsg.style.display = 'block';
+    return;
+  }
+
+  section.style.display = 'block';
+  emptyMsg.style.display = 'none';
+
+  container.innerHTML = keys.map(id => {
+    const item = selectedDesigns[id];
+    const d = item.design;
+
+    const sizeOptions = SIZES.map(s => `<option value="${s}"${item.size===s?' selected':''}>${s}</option>`).join('');
+    const qtyOptions = [1,2,3,4,5,6,7,8,9,10].map(n => `<option value="${n}"${item.qty===n?' selected':''}>${n}</option>`).join('');
+
+    let variantHtml = '';
+    if (d.hasVariants) {
+      const vLabel = d.variantLabel || 'Front Print Design';
+      variantHtml = `<div style="margin-top:10px;">
+        <div class="variant-label">${vLabel} <span class="req" style="color:var(--accent2)">*</span></div>
+        <div class="variant-grid">
+          ${d.variants.map(v => `<button class="variant-btn${item.variant===v?' selected':''}" onclick="setVariant('${id}','${v}')">${v}</button>`).join('')}
+        </div>
+      </div>`;
+    }
+
+    const sizeInfoId = 'sizeInfo-'+id;
+    const sizeInfoHtml = item.showSizeInfo ? `
+      <div class="size-inline">
+        <table><tr><th></th>${SIZES.map(s=>`<th>${s}</th>`).join('')}</tr>
+        <tr><td>Chest</td>${SIZES_CHEST.map(v=>`<td>${v}"</td>`).join('')}</tr>
+        <tr><td>Length</td>${SIZES_LENGTH.map(v=>`<td>${v}"</td>`).join('')}</tr>
+        <tr><td>Shoulder</td>${SIZES_SHOULDER.map(v=>`<td>${v}"</td>`).join('')}</tr>
+        </table>
+      </div>` : '';
+
+    return `<div class="order-item" id="item-${id}">
+      <div class="order-item-header">
+        <div>
+          <div class="order-item-title">${d.name}</div>
+          <div class="order-item-sub">${d.color}${d.variantType ? ' · '+d.variantType+' print':''}</div>
+        </div>
+        <button class="remove-btn" onclick="toggleDesign('${id}')">✕ Remove</button>
+      </div>
+
+      <div class="order-row">
+        <div class="order-field" style="flex:2;min-width:120px;">
+          <label>Size <span class="req" style="color:var(--accent2)">*</span>
+            <button class="size-info-btn" onclick="toggleSizeInfo('${id}')">📐 size guide</button>
+          </label>
+          <select onchange="updateItem('${id}','size',this.value)">
+            <option value="">Pick size…</option>
+            ${sizeOptions}
+          </select>
+          ${sizeInfoHtml}
+        </div>
+        <div class="order-field" style="width:90px;">
+          <label>Quantity</label>
+          <select onchange="updateItem('${id}','qty',parseInt(this.value))">
+            ${qtyOptions}
+          </select>
+        </div>
+        <div class="order-field" style="flex:2;min-width:140px;">
+          <label>Print Position</label>
+          <div class="print-pos">
+            <div class="pos-btn${item.position==='Chest'?' selected':''}" onclick="updateItem('${id}','position','Chest');renderOrderItems()">
+              <span class="pos-icon">👕</span>
+              <div class="pos-label">Chest</div>
+            </div>
+            <div class="pos-btn${item.position==='Back'?' selected':''}" onclick="updateItem('${id}','position','Back');renderOrderItems()">
+              <span class="pos-icon">🔁</span>
+              <div class="pos-label">Back</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      ${variantHtml}
+    </div>`;
+  }).join('');
+}
+
+function updateItem(id, key, val) {
+  if (selectedDesigns[id]) selectedDesigns[id][key] = val;
+  if (key !== 'position') {
+    const el = document.querySelector(`#item-${id} .order-field select[onchange*="${key}"]`);
+  }
+}
+
+function setVariant(id, variant) {
+  if (selectedDesigns[id]) selectedDesigns[id].variant = variant;
+  renderOrderItems();
+}
+
+function toggleSizeInfo(id) {
+  if (selectedDesigns[id]) {
+    selectedDesigns[id].showSizeInfo = !selectedDesigns[id].showSizeInfo;
+    renderOrderItems();
+  }
+}
+
+function toggleSizeChart() {
+  const el = document.getElementById('sizeChartInner');
+  el.classList.toggle('open');
+}
+
+const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+async function submitOrder() {
+  const name    = document.getElementById('custName').value.trim();
+  const email   = document.getElementById('custEmail').value.trim();
+  const country = document.getElementById('custCountry').value;
+  const notes   = document.getElementById('extraNotes').value.trim();
+  const keys    = Object.keys(selectedDesigns);
+
+  if (!name || !email || !country) { alert('Please fill in your name, email, and country.'); return; }
+  if (keys.length === 0) { alert('Please select at least one design.'); return; }
+  for (const id of keys) {
+    const item = selectedDesigns[id];
+    if (!item.size) { alert('Please select a size for: ' + item.design.name); return; }
+    if (item.design.hasVariants && !item.variant) { alert('Please select a variant for: ' + item.design.name); return; }
+  }
+
+  const orderLines = keys.map(id => {
+    const item = selectedDesigns[id];
+    const d = item.design;
+    return d.name + ' | ' + d.color + (d.variantType ? ' (' + d.variantType + ')' : '') + ' | Variant: ' + (item.variant||'N/A') + ' | Size: ' + item.size + ' | Qty: ' + item.qty + ' | Position: ' + item.position;
+  }).join('\n');
+
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Submitting...'; btn.disabled = true;
+
+  if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+    const toast = document.getElementById('toast');
+    toast.textContent = 'Dev mode — configure GOOGLE_SCRIPT_URL to enable real submissions.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+    btn.textContent = 'Submit Order'; btn.disabled = false;
+    return;
+  }
+
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ timestamp: new Date().toISOString(), name, email, country, orderLines, itemCount: keys.length, notes }) });
+    const toast = document.getElementById('toast');
+    toast.textContent = 'Order submitted! We\'ll be in touch soon.';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+    selectedDesigns = {}; renderDesigns(); renderOrderItems();
+    ['custName','custEmail','custCountry','extraNotes'].forEach(id => document.getElementById(id).value = '');
+  } catch(err) {
+    alert('Something went wrong. Please try again.');
+  } finally {
+    btn.textContent = 'Submit Order'; btn.disabled = false;
+  }
+}
+
+renderDesigns();
+</script>
+</body>
+</html>
