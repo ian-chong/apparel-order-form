@@ -42,17 +42,18 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
 .design-card{background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--r2);overflow:hidden;position:relative;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
 .design-card:hover{border-color:var(--border2);transform:translateY(-2px)}
 .design-card.selected{border-color:var(--accent)}
-.design-card.selected::after{content:'¹3';position:absolute;top:8px;right:8px;width:22px;height:22px;background:var(--accent);color:#fff;border-radius:50%;font-size:13px;font-weight:800;line-height:22px;text-align:center;z-index:2}
+.design-card.selected::after{content:'\2713';position:absolute;top:8px;right:8px;width:22px;height:22px;background:var(--accent);color:#fff;border-radius:50%;font-size:13px;font-weight:800;line-height:22px;text-align:center;z-index:2}
 .design-img-wrap{width:100%;height:160px;overflow:hidden;background:var(--bg4);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;cursor:pointer}
 .design-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
 .design-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--text3);font-size:11px;text-align:center;padding:8px}
 .placeholder-icon{font-size:32px;opacity:.3}
-.img-flip-btn{position:absolute;bottom:6px;right:6px;background:rgba(255,255,255,.9);border:none;border-radius:6px;font-size:10px;font-weight:700;color:var(--accent);padding:3px 7px;cursor:pointer;z-index:3;font-family:'Nunito',sans-serif;letter-spacing:.5px}
-.img-flip-btn:hover{background:#fff}
-.swatch-row{display:flex;gap:5px;padding:6px 10px;background:var(--bg4);border-top:1px solid var(--border)}
-.swatch{width:18px;height:18px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:border-color .15s,transform .15s;flex-shrink:0}
-.swatch:hover{transform:scale(1.15)}
-.swatch.active{border-color:var(--accent)}
+.img-flip-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,.85);border:none;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:background .2s,transform .2s}
+.img-flip-btn:hover{background:rgba(255,255,255,.98);transform:translate(-50%,-50%) scale(1.1)}
+.img-flip-btn svg{width:20px;height:20px;display:block}
+.swatch-row{display:flex;gap:6px;padding:7px 10px;background:var(--bg4);border-top:1px solid var(--border);align-items:center}
+.swatch{width:18px;height:18px;border-radius:50%;border:2px solid #aab0bc;cursor:pointer;transition:border-color .15s,transform .15s;flex-shrink:0;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+.swatch:hover{transform:scale(1.15);border-color:#6a7a90}
+.swatch.active{border-color:var(--accent);box-shadow:0 0 0 2px rgba(26,86,186,.25)}
 .design-card-body{padding:10px 12px;flex:1;cursor:pointer}
 .design-name{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--text);line-height:1.2}
 .design-sub{font-size:11px;color:var(--text3);margin-top:2px}
@@ -78,13 +79,6 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
 .btn-remove-row:hover{background:rgba(208,48,48,.1);border-color:#d03030}
 .btn-add-size{margin-top:12px;background:none;border:1.5px dashed var(--border2);color:var(--accent);font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;width:100%;transition:all .2s}
 .btn-add-size:hover{background:rgba(26,86,186,.05);border-color:var(--accent)}
-.print-pos{display:flex;gap:8px}
-.pos-btn{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:8px;cursor:pointer;text-align:center;transition:all .2s;font-family:'Nunito',sans-serif}
-.pos-btn:hover{border-color:var(--border2)}
-.pos-btn.selected{border-color:var(--accent);background:rgba(26,86,186,.07)}
-.pos-btn .pos-icon{font-size:16px;margin-bottom:2px;display:block}
-.pos-btn .pos-label{font-size:11px;color:var(--text2);font-weight:600}
-.pos-btn.selected .pos-label{color:var(--accent)}
 .variant-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;margin-top:8px}
 .variant-btn{background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:6px 8px;cursor:pointer;text-align:center;font-size:12px;color:var(--text2);transition:all .2s;font-family:'Nunito',sans-serif}
 .variant-btn:hover{border-color:var(--border2);color:var(--text)}
@@ -106,6 +100,7 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
 .modal-close{position:absolute;top:12px;right:14px;background:none;border:none;font-size:20px;color:var(--text3);cursor:pointer;line-height:1;padding:4px 8px;border-radius:4px}
 .modal-close:hover{color:var(--text);background:var(--bg4)}
 @media(max-width:500px){.designs-grid{grid-template-columns:repeat(2,1fr)}.order-row{flex-direction:column}.order-field{width:100%}}
+
 </style>
 </head>
 <body>
@@ -206,7 +201,6 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
 </div>
 <div class="toast" id="toast"></div>
 <script>
-const SIZES = ['S','M','L','XL','2XL','3XL','5XL'];
 const DESIGNS = [
   {
     "id": "gundam-aerial",
@@ -216,7 +210,8 @@ const DESIGNS = [
     "back": "",
     "category": "anime",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": true
   },
   {
     "id": "kingdom-hearts",
@@ -226,7 +221,8 @@ const DESIGNS = [
     "back": "",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": true
   },
   {
     "id": "final-fantasy",
@@ -236,7 +232,8 @@ const DESIGNS = [
     "back": "",
     "category": "anime",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": true
   },
   {
     "id": "evangelion",
@@ -245,8 +242,22 @@ const DESIGNS = [
     "front": "images/Evangelion%20Front.png",
     "back": "images/Evangelion%20Back.png",
     "category": "anime",
-    "colors": null,
-    "variants": null
+    "colors": [
+      {
+        "label": "Original",
+        "hex": "#1a2a4a",
+        "front": "images/Evangelion%20Front.png",
+        "back": "images/Evangelion%20Back.png"
+      },
+      {
+        "label": "EVA Unit 02",
+        "hex": "#8B1a1a",
+        "front": "images/EVA-Unit-02.png",
+        "back": "images/EVA-Unit-02-Back.png"
+      }
+    ],
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "hades",
@@ -256,27 +267,41 @@ const DESIGNS = [
     "back": "images/Hades%20back.png",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "zelda-botw",
-    "name": "Zelda BOTW",
-    "color": "Black",
+    "name": "Zelda BOTW Unit 1",
+    "color": "Navy",
     "front": "images/Zelda%20BOTW%20Front.png",
     "back": "images/Zelda%20BOTW%20Back.png",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": false
+  },
+  {
+    "id": "zelda-botw-2",
+    "name": "Zelda BOTW Unit 2",
+    "color": "Navy",
+    "front": "images/Zelda%20BOTW%20Front.png",
+    "back": "images/Zelda%20BOTW%20Back.png",
+    "category": "game",
+    "colors": null,
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "god-of-war",
     "name": "God of War",
-    "color": "Black",
+    "color": "Navy",
     "front": "images/God%20of%20war%20front.png",
     "back": "images/God%20of%20War%20Back.png",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "dmc",
@@ -286,17 +311,19 @@ const DESIGNS = [
     "back": "images/Devil%20May%20Cry%20Back.png",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "monster-hunter",
     "name": "Monster Hunter",
-    "color": "Black",
+    "color": "Navy",
     "front": "images/Monster%20Hunter%20Front.png",
     "back": "images/Monster%20Hunter%20Back.png",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "mgs-vintage",
@@ -306,7 +333,8 @@ const DESIGNS = [
     "back": "images/MGS%20Vintage%20Back.png",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "mgs-black",
@@ -316,7 +344,8 @@ const DESIGNS = [
     "back": "images/Metal%20Gear%20Solid%20Back.png",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "kpop-demon",
@@ -326,28 +355,8 @@ const DESIGNS = [
     "back": "images/KPOP%20Demon%20Hunters%20Back.png",
     "category": "kpop",
     "colors": null,
-    "variants": null
-  },
-  {
-    "id": "black-myth",
-    "name": "Black Myth Wukong",
-    "color": "Black",
-    "front": "images/Black%20Myth%20Wukong%20Black.png",
-    "back": "",
-    "category": "game",
-    "colors": [
-      {
-        "label": "Black",
-        "hex": "#222222",
-        "img": "images/Black%20Myth%20Wukong%20Black.png"
-      },
-      {
-        "label": "White",
-        "hex": "#eeeeee",
-        "img": "images/Black%20Myth%20Wukong%20White.png"
-      }
-    ],
-    "variants": null
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "rocketboo",
@@ -360,15 +369,18 @@ const DESIGNS = [
       {
         "label": "Yellow",
         "hex": "#f5c842",
-        "img": "images/Rocketboo%20Yellow.png"
+        "front": "images/Rocketboo%20Yellow.png",
+        "back": ""
       },
       {
         "label": "Heather",
         "hex": "#b0a9a0",
-        "img": "images/Rocketboo%20Heather.png"
+        "front": "images/Rocketboo%20Heather.png",
+        "back": ""
       }
     ],
-    "variants": null
+    "variants": null,
+    "noFlip": true
   },
   {
     "id": "dmc-dante",
@@ -378,7 +390,8 @@ const DESIGNS = [
     "back": "images/DMC%20Dante%20Back.png",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "dmc-vergil",
@@ -388,7 +401,8 @@ const DESIGNS = [
     "back": "images/DMC%20Vergil%20Back.png",
     "category": "game",
     "colors": null,
-    "variants": null
+    "variants": null,
+    "noFlip": false
   },
   {
     "id": "bg3-front",
@@ -451,7 +465,8 @@ const DESIGNS = [
         "label": "Wizard",
         "img": ""
       }
-    ]
+    ],
+    "noFlip": true
   },
   {
     "id": "bg3-back",
@@ -470,41 +485,86 @@ const DESIGNS = [
         "label": "Gold",
         "img": "images/Baldurs%20gate%203%20Back%20Gold.png"
       }
-    ]
+    ],
+    "noFlip": true
+  },
+  {
+    "id": "aemeath",
+    "name": "Aemeath",
+    "color": "White",
+    "front": "images/Aemeath-front.png",
+    "back": "images/Aemeath-back.png",
+    "category": "game",
+    "colors": null,
+    "variants": null,
+    "noFlip": false
+  },
+  {
+    "id": "animal-crossing",
+    "name": "Animal Crossing",
+    "color": "White",
+    "front": "images/Animal-Crossing.png",
+    "back": "",
+    "category": "game",
+    "colors": null,
+    "variants": null,
+    "noFlip": true
+  },
+  {
+    "id": "pokopia",
+    "name": "Pokopia",
+    "color": "Navy",
+    "front": "images/Pokopia.png",
+    "back": "",
+    "category": "original",
+    "colors": null,
+    "variants": null,
+    "noFlip": true
+  },
+  {
+    "id": "wuthering-waves",
+    "name": "Wuthering Waves",
+    "color": "Black",
+    "front": "images/Wuthering-Waves-Front.png",
+    "back": "images/Wuthering-Waves-Back.png",
+    "category": "game",
+    "colors": null,
+    "variants": null,
+    "noFlip": false
   }
-,
-  {"id":"aemeath","name":"Aemeath","color":"Black","front":"images/Aemeath-front.png","back":"images/Aemeath-back.png","category":"game","colors":null,"noFlip":false,"variants":null},
-  {"id":"animal-crossing","name":"Animal Crossing","color":"White","front":"images/Animal-Crossing.png","back":"","category":"game","colors":null,"noFlip":true,"variants":null},
-  {"id":"pokopia","name":"Pokopia","color":"Black","front":"images/Pokopia.png","back":"","category":"original","colors":null,"noFlip":true,"variants":null},
-  {"id":"wuthering-waves","name":"Wuthering Waves","color":"Black","front":"images/Wuthering-Waves-Front.png","back":"images/Wuthering-Waves-Back.png","category":"game","colors":null,"noFlip":false,"variants":null}];
+];
+const SIZES = ['S','M','L','XL','2XL','3XL','5XL'];
 const CAT = {anime:'#6a9fd8',game:'#c46bb2',original:'#5dbf87',kpop:'#e87878'};
 const cardState = {};
 let sel = {}, rowId = 0;
 
 function mkRow(d, colorLabel) {
-  return {id: 'r' + (rowId++), size: '', qty: 1, pos: 'Chest', variant: d.variants ? '' : null, colorLabel: colorLabel || d.color};
+  return {id:'r'+(rowId++), size:'', qty:1, variant:d.variants?'':null, colorLabel:colorLabel||d.color};
+}
+
+function currentImgs(d, st) {
+  if (d.colors && d.colors.length) {
+    const c = d.colors[st.colorIdx];
+    return {front: c.front, back: c.back || ''};
+  }
+  return {front: d.front, back: d.back || ''};
 }
 
 function renderDesigns() {
   const g = document.getElementById('designsGrid');
   g.innerHTML = '';
   DESIGNS.forEach(function(d) {
-    if (!cardState[d.id]) cardState[d.id] = {showBack: false, colorIdx: 0};
+    if (!cardState[d.id]) cardState[d.id] = {showBack:false, colorIdx:0};
     const st = cardState[d.id];
     const isSelected = !!sel[d.id];
-
-    let currentImg = d.front;
-    if (d.colors && d.colors.length) {
-      currentImg = st.showBack ? (d.back || '') : d.colors[st.colorIdx].img;
-    } else if (st.showBack && d.back) {
-      currentImg = d.back;
-    }
+    const imgs = currentImgs(d, st);
+    const currentImg = st.showBack ? imgs.back : imgs.front;
+    const hasBack = !d.noFlip && imgs.back;
 
     const card = document.createElement('div');
     card.className = 'design-card' + (isSelected ? ' selected' : '');
     card.id = 'card-' + d.id;
 
-    // Image wrap
     const wrap = document.createElement('div');
     wrap.className = 'design-img-wrap';
     wrap.onclick = function() { toggleDesign(d.id); };
@@ -515,21 +575,37 @@ function renderDesigns() {
       img.alt = d.name;
       img.loading = 'lazy';
       img.onerror = function() {
-        wrap.innerHTML = '<div class="design-img-placeholder"><div class="placeholder-icon">&#128249;</div><span>' + d.name + '</span></div>';
+        wrap.innerHTML = '';
+        const ph = document.createElement('div');
+        ph.className = 'design-img-placeholder';
+        const icon = document.createElement('div');
+        icon.className = 'placeholder-icon';
+        icon.textContent = '\u{1F4F7}';
+        const span = document.createElement('span');
+        span.textContent = d.name;
+        ph.appendChild(icon);
+        ph.appendChild(span);
+        wrap.appendChild(ph);
       };
       wrap.appendChild(img);
     } else {
       const ph = document.createElement('div');
       ph.className = 'design-img-placeholder';
-      ph.innerHTML = '<div class="placeholder-icon">&#128249;</div><span>' + d.name + '</span>';
+      const icon = document.createElement('div');
+      icon.className = 'placeholder-icon';
+      icon.textContent = '\u{1F4F7}';
+      const span = document.createElement('span');
+      span.textContent = d.name;
+      ph.appendChild(icon);
+      ph.appendChild(span);
       wrap.appendChild(ph);
     }
 
-    // Flip button
-    if (d.back) {
+    if (hasBack) {
       const flip = document.createElement('button');
       flip.className = 'img-flip-btn';
-      flip.textContent = st.showBack ? 'FRONT' : 'BACK';
+      flip.title = st.showBack ? 'View front' : 'View back';
+      flip.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#1a56ba" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>';
       flip.onclick = function(e) {
         e.stopPropagation();
         cardState[d.id].showBack = !cardState[d.id].showBack;
@@ -539,7 +615,6 @@ function renderDesigns() {
     }
     card.appendChild(wrap);
 
-    // Colour swatches
     if (d.colors && d.colors.length > 1) {
       const swatchRow = document.createElement('div');
       swatchRow.className = 'swatch-row';
@@ -559,13 +634,12 @@ function renderDesigns() {
       card.appendChild(swatchRow);
     }
 
-    // Card body
     const body = document.createElement('div');
     body.className = 'design-card-body';
     body.onclick = function() { toggleDesign(d.id); };
     const colorLabel = (d.colors && d.colors.length) ? d.colors[st.colorIdx].label : d.color;
     const dot = document.createElement('span');
-    dot.style.cssText = 'display:inline-block;width:6px;height:6px;border-radius:50%;background:' + (CAT[d.category] || '#888') + ';margin-right:4px;vertical-align:middle';
+    dot.style.cssText = 'display:inline-block;width:6px;height:6px;border-radius:50%;background:' + (CAT[d.category]||'#888') + ';margin-right:4px;vertical-align:middle';
     const nameEl = document.createElement('div');
     nameEl.className = 'design-name';
     nameEl.textContent = d.name;
@@ -587,15 +661,14 @@ function renderDesigns() {
 }
 
 function toggleDesign(id) {
-  const d = DESIGNS.find(function(x) { return x.id === id; });
-  if (sel[id]) {
-    delete sel[id];
-  } else {
-    const st = cardState[id] || {colorIdx: 0};
-    const colorLabel = (d.colors && d.colors.length) ? d.colors[st.colorIdx].label : d.color;
-    sel[id] = {d: d, rows: [mkRow(d, colorLabel)]};
+  const d = DESIGNS.find(function(x){return x.id===id;});
+  if (sel[id]) { delete sel[id]; }
+  else {
+    const st = cardState[id]||{colorIdx:0};
+    const colorLabel = (d.colors&&d.colors.length) ? d.colors[st.colorIdx].label : d.color;
+    sel[id] = {d:d, rows:[mkRow(d, colorLabel)]};
   }
-  const c = document.getElementById('card-' + id);
+  const c = document.getElementById('card-'+id);
   if (c) c.className = 'design-card' + (sel[id] ? ' selected' : '');
   renderOrder();
 }
@@ -603,26 +676,22 @@ function toggleDesign(id) {
 function addRow(id) {
   if (!sel[id]) return;
   const d = sel[id].d;
-  const st = cardState[id] || {colorIdx: 0};
-  const colorLabel = (d.colors && d.colors.length) ? d.colors[st.colorIdx].label : d.color;
+  const st = cardState[id]||{colorIdx:0};
+  const colorLabel = (d.colors&&d.colors.length) ? d.colors[st.colorIdx].label : d.color;
   sel[id].rows.push(mkRow(d, colorLabel));
   renderOrder();
 }
 
 function removeRow(id, rid) {
   if (!sel[id]) return;
-  sel[id].rows = sel[id].rows.filter(function(r) { return r.id !== rid; });
-  if (!sel[id].rows.length) {
-    delete sel[id];
-    const c = document.getElementById('card-' + id);
-    if (c) c.className = 'design-card';
-  }
+  sel[id].rows = sel[id].rows.filter(function(r){return r.id!==rid;});
+  if (!sel[id].rows.length) { delete sel[id]; const c=document.getElementById('card-'+id); if(c)c.className='design-card'; }
   renderOrder();
 }
 
 function setField(id, rid, key, val) {
   if (!sel[id]) return;
-  const r = sel[id].rows.find(function(r) { return r.id === rid; });
+  const r = sel[id].rows.find(function(r){return r.id===rid;});
   if (r) r[key] = val;
 }
 
@@ -631,208 +700,149 @@ function renderOrder() {
   const con = document.getElementById('orderItems');
   const emp = document.getElementById('orderEmptyMsg');
   const keys = Object.keys(sel);
-  if (!keys.length) { sec.style.display = 'none'; emp.style.display = 'block'; return; }
-  sec.style.display = 'block';
-  emp.style.display = 'none';
-  con.innerHTML = '';
+  if (!keys.length) { sec.style.display='none'; emp.style.display='block'; return; }
+  sec.style.display='block'; emp.style.display='none'; con.innerHTML='';
 
   keys.forEach(function(id) {
     const e = sel[id], d = e.d;
     const el = document.createElement('div');
-    el.className = 'order-item';
-    el.id = 'item-' + id;
+    el.className = 'order-item'; el.id = 'item-' + id;
 
-    // Header
     const hdr = document.createElement('div');
     hdr.className = 'order-item-header';
     const titleWrap = document.createElement('div');
     const titleEl = document.createElement('div');
-    titleEl.className = 'order-item-title';
-    titleEl.textContent = d.name;
+    titleEl.className = 'order-item-title'; titleEl.textContent = d.name;
     const subEl = document.createElement('div');
-    subEl.className = 'order-item-sub';
-    subEl.textContent = d.color;
-    titleWrap.appendChild(titleEl);
-    titleWrap.appendChild(subEl);
+    subEl.className = 'order-item-sub'; subEl.textContent = d.color;
+    titleWrap.appendChild(titleEl); titleWrap.appendChild(subEl);
     const actions = document.createElement('div');
     actions.className = 'order-item-actions';
     const guideBtn = document.createElement('button');
-    guideBtn.className = 'btn-guide';
-    guideBtn.textContent = '📐 Size guide';
-    guideBtn.onclick = function() { document.getElementById('sizeModal').classList.add('open'); };
+    guideBtn.className = 'btn-guide'; guideBtn.textContent = '\u{1F4D0} Size guide';
+    guideBtn.onclick = function(){ document.getElementById('sizeModal').classList.add('open'); };
     const removeBtn = document.createElement('button');
-    removeBtn.className = 'remove-btn';
-    removeBtn.textContent = '✕ Remove';
-    removeBtn.onclick = (function(capturedId) { return function() { toggleDesign(capturedId); }; })(id);
-    actions.appendChild(guideBtn);
-    actions.appendChild(removeBtn);
-    hdr.appendChild(titleWrap);
-    hdr.appendChild(actions);
+    removeBtn.className = 'remove-btn'; removeBtn.textContent = '\u2715 Remove';
+    removeBtn.onclick = (function(cid){ return function(){ toggleDesign(cid); }; })(id);
+    actions.appendChild(guideBtn); actions.appendChild(removeBtn);
+    hdr.appendChild(titleWrap); hdr.appendChild(actions);
     el.appendChild(hdr);
 
-    // Size rows
     e.rows.forEach(function(row) {
       const rowEl = document.createElement('div');
-      rowEl.className = 'size-row';
-      rowEl.id = 'sizerow-' + row.id;
-
+      rowEl.className = 'size-row'; rowEl.id = 'sizerow-' + row.id;
       const orderRow = document.createElement('div');
       orderRow.className = 'order-row';
 
-      // Size field
       const sizeField = document.createElement('div');
-      sizeField.className = 'order-field';
-      sizeField.style.cssText = 'flex:2;min-width:110px';
+      sizeField.className = 'order-field'; sizeField.style.cssText = 'flex:2;min-width:110px';
       const sizeLbl = document.createElement('label');
       sizeLbl.innerHTML = 'Size <span style="color:#1240a0">*</span>';
       const sizeSel = document.createElement('select');
-      sizeSel.innerHTML = '<option value="">Pick size&hellip;</option>' + SIZES.map(function(s) {
-        return '<option value="' + s + '"' + (row.size === s ? ' selected' : '') + '>' + s + '</option>';
+      sizeSel.innerHTML = '<option value="">Pick size&hellip;</option>' + SIZES.map(function(s){
+        return '<option value="'+s+'"'+(row.size===s?' selected':'')+'>'+s+'</option>';
       }).join('');
-      sizeSel.onchange = (function(cid, rid) { return function() { setField(cid, rid, 'size', this.value); }; })(id, row.id);
-      sizeField.appendChild(sizeLbl);
-      sizeField.appendChild(sizeSel);
+      sizeSel.onchange = (function(cid,rid){ return function(){ setField(cid,rid,'size',this.value); }; })(id,row.id);
+      sizeField.appendChild(sizeLbl); sizeField.appendChild(sizeSel);
       orderRow.appendChild(sizeField);
 
-      // Qty field
       const qtyField = document.createElement('div');
-      qtyField.className = 'order-field';
-      qtyField.style.width = '85px';
-      const qtyLbl = document.createElement('label');
-      qtyLbl.textContent = 'Qty';
+      qtyField.className = 'order-field'; qtyField.style.width = '85px';
+      const qtyLbl = document.createElement('label'); qtyLbl.textContent = 'Qty';
       const qtySel = document.createElement('select');
-      qtySel.innerHTML = [1,2,3,4,5,6,7,8,9,10].map(function(n) {
-        return '<option value="' + n + '"' + (row.qty === n ? ' selected' : '') + '>' + n + '</option>';
+      qtySel.innerHTML = [1,2,3,4,5,6,7,8,9,10].map(function(n){
+        return '<option value="'+n+'"'+(row.qty===n?' selected':'')+'>'+n+'</option>';
       }).join('');
-      qtySel.onchange = (function(cid, rid) { return function() { setField(cid, rid, 'qty', parseInt(this.value)); }; })(id, row.id);
-      qtyField.appendChild(qtyLbl);
-      qtyField.appendChild(qtySel);
+      qtySel.onchange = (function(cid,rid){ return function(){ setField(cid,rid,'qty',parseInt(this.value)); }; })(id,row.id);
+      qtyField.appendChild(qtyLbl); qtyField.appendChild(qtySel);
       orderRow.appendChild(qtyField);
 
-      // Position field
-      const posField = document.createElement('div');
-      posField.className = 'order-field';
-      posField.style.cssText = 'flex:2;min-width:130px';
-      const posLbl = document.createElement('label');
-      posLbl.textContent = 'Print Position';
-      const posBtns = document.createElement('div');
-      posBtns.className = 'print-pos';
-      ['Chest','Back'].forEach(function(pos) {
-        const btn = document.createElement('div');
-        btn.className = 'pos-btn' + (row.pos === pos ? ' selected' : '');
-        btn.innerHTML = '<span class="pos-icon">' + (pos === 'Chest' ? '👕' : '🔁') + '</span><div class="pos-label">' + pos + '</div>';
-        btn.onclick = (function(cid, rid, p) { return function() { setField(cid, rid, 'pos', p); renderOrder(); }; })(id, row.id, pos);
-        posBtns.appendChild(btn);
-      });
-      posField.appendChild(posLbl);
-      posField.appendChild(posBtns);
-      orderRow.appendChild(posField);
-
-      // Remove row button (only if multiple rows)
       if (e.rows.length > 1) {
         const rmField = document.createElement('div');
-        rmField.className = 'order-field';
-        rmField.style.cssText = 'justify-content:flex-end;padding-top:18px';
+        rmField.className = 'order-field'; rmField.style.cssText = 'justify-content:flex-end;padding-top:18px';
         const rmBtn = document.createElement('button');
-        rmBtn.className = 'btn-remove-row';
-        rmBtn.innerHTML = '&#10005;';
-        rmBtn.onclick = (function(cid, rid) { return function() { removeRow(cid, rid); }; })(id, row.id);
-        rmField.appendChild(rmBtn);
-        orderRow.appendChild(rmField);
+        rmBtn.className = 'btn-remove-row'; rmBtn.innerHTML = '&#10005;';
+        rmBtn.onclick = (function(cid,rid){ return function(){ removeRow(cid,rid); }; })(id,row.id);
+        rmField.appendChild(rmBtn); orderRow.appendChild(rmField);
       }
-
       rowEl.appendChild(orderRow);
 
-      // Variants
       if (d.variants) {
-        const varWrap = document.createElement('div');
-        varWrap.style.marginTop = '8px';
-        const varLbl = document.createElement('div');
-        varLbl.className = 'variant-label';
+        const varWrap = document.createElement('div'); varWrap.style.marginTop='8px';
+        const varLbl = document.createElement('div'); varLbl.className='variant-label';
         varLbl.innerHTML = 'Design Variant <span style="color:#1240a0">*</span>';
-        const varGrid = document.createElement('div');
-        varGrid.className = 'variant-grid';
+        const varGrid = document.createElement('div'); varGrid.className='variant-grid';
         d.variants.forEach(function(v) {
           const vBtn = document.createElement('button');
-          vBtn.className = 'variant-btn' + (row.variant === v.label ? ' selected' : '');
+          vBtn.className = 'variant-btn'+(row.variant===v.label?' selected':'');
           vBtn.textContent = v.label;
-          vBtn.onclick = (function(cid, rid, label) {
-            return function() { setField(cid, rid, 'variant', label); renderOrder(); };
-          })(id, row.id, v.label);
+          vBtn.onclick = (function(cid,rid,label){ return function(){ setField(cid,rid,'variant',label); renderOrder(); }; })(id,row.id,v.label);
           varGrid.appendChild(vBtn);
         });
-        varWrap.appendChild(varLbl);
-        varWrap.appendChild(varGrid);
+        varWrap.appendChild(varLbl); varWrap.appendChild(varGrid);
         rowEl.appendChild(varWrap);
       }
-
       el.appendChild(rowEl);
     });
 
-    // Add size button
     const addBtn = document.createElement('button');
-    addBtn.className = 'btn-add-size';
-    addBtn.textContent = '+ Add another size';
-    addBtn.onclick = (function(cid) { return function() { addRow(cid); }; })(id);
+    addBtn.className = 'btn-add-size'; addBtn.textContent = '+ Add another size';
+    addBtn.onclick = (function(cid){ return function(){ addRow(cid); }; })(id);
     el.appendChild(addBtn);
-
     con.appendChild(el);
   });
 }
 
-function toggleSizeChart() { document.getElementById('sizeChartInner').classList.toggle('open'); }
+function toggleSizeChart(){ document.getElementById('sizeChartInner').classList.toggle('open'); }
 
 const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 
 async function submitOrder() {
-  const name = document.getElementById('custName').value.trim();
-  const email = document.getElementById('custEmail').value.trim();
-  const country = document.getElementById('custCountry').value;
-  const notes = document.getElementById('extraNotes').value.trim();
-  const keys = Object.keys(sel);
-  if (!name || !email || !country) { alert('Please fill in your name, email, and country.'); return; }
-  if (!keys.length) { alert('Please select at least one design.'); return; }
-  for (let i = 0; i < keys.length; i++) {
-    const e = sel[keys[i]];
-    for (let j = 0; j < e.rows.length; j++) {
-      const r = e.rows[j];
-      if (!r.size) { alert('Please select a size for: ' + e.d.name); return; }
-      if (e.d.variants && !r.variant) { alert('Please select a variant for: ' + e.d.name); return; }
+  const name=document.getElementById('custName').value.trim();
+  const email=document.getElementById('custEmail').value.trim();
+  const country=document.getElementById('custCountry').value;
+  const notes=document.getElementById('extraNotes').value.trim();
+  const keys=Object.keys(sel);
+  if(!name||!email||!country){alert('Please fill in your name, email, and country.');return;}
+  if(!keys.length){alert('Please select at least one design.');return;}
+  for(let i=0;i<keys.length;i++){
+    const e=sel[keys[i]];
+    for(let j=0;j<e.rows.length;j++){
+      const r=e.rows[j];
+      if(!r.size){alert('Please select a size for: '+e.d.name);return;}
+      if(e.d.variants&&!r.variant){alert('Please select a variant for: '+e.d.name);return;}
     }
   }
-  const lines = keys.map(function(id) {
-    return sel[id].rows.map(function(r) {
-      const d = sel[id].d;
-      return d.name + ' | ' + (r.colorLabel || d.color) + (d.variants ? ' | Variant: ' + r.variant : '') + ' | Size: ' + r.size + ' | Qty: ' + r.qty + ' | Position: ' + r.pos;
+  const lines=keys.map(function(id){
+    return sel[id].rows.map(function(r){
+      const d=sel[id].d;
+      return d.name+' | '+(r.colorLabel||d.color)+(d.variants?' | Variant: '+r.variant:'')+' | Size: '+r.size+' | Qty: '+r.qty;
     }).join('\n');
   }).join('\n');
-  const total = keys.reduce(function(s, id) { return s + sel[id].rows.length; }, 0);
-  const btn = document.getElementById('submitBtn');
-  btn.textContent = 'Submitting...';
-  btn.disabled = true;
-  if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-    showToast('Dev mode — set SCRIPT_URL to enable real submissions.');
-    btn.textContent = 'Submit Order';
-    btn.disabled = false;
-    return;
+  const total=keys.reduce(function(s,id){return s+sel[id].rows.length;},0);
+  const btn=document.getElementById('submitBtn');
+  btn.textContent='Submitting...'; btn.disabled=true;
+  if(!SCRIPT_URL||SCRIPT_URL==='YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'){
+    showToast('Dev mode \u2014 set SCRIPT_URL to enable real submissions.');
+    btn.textContent='Submit Order'; btn.disabled=false; return;
   }
-  try {
-    await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify({timestamp: new Date().toISOString(), name, email, country, orderLines: lines, itemCount: total, notes})});
-    showToast("Order submitted! We'll be in touch soon.");
-    sel = {}; renderDesigns(); renderOrder();
-    ['custName','custEmail','custCountry','extraNotes'].forEach(function(id) { document.getElementById(id).value = ''; });
-  } catch(err) { alert('Something went wrong. Please try again.'); }
-  finally { btn.textContent = 'Submit Order'; btn.disabled = false; }
+  try{
+    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({timestamp:new Date().toISOString(),name:name,email:email,country:country,orderLines:lines,itemCount:total,notes:notes})});
+    showToast('Order submitted! We will be in touch soon.');
+    sel={}; renderDesigns(); renderOrder();
+    ['custName','custEmail','custCountry','extraNotes'].forEach(function(id){document.getElementById(id).value='';});
+  }catch(err){alert('Something went wrong. Please try again.');}
+  finally{btn.textContent='Submit Order'; btn.disabled=false;}
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function() { t.classList.remove('show'); }, 4000);
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},4000);
 }
 
 renderDesigns();
+
 </script>
 </body>
 </html>
