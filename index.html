@@ -99,6 +99,16 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
 .modal-title{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
 .modal-close{position:absolute;top:12px;right:14px;background:none;border:none;font-size:20px;color:var(--text3);cursor:pointer;line-height:1;padding:4px 8px;border-radius:4px}
 .modal-close:hover{color:var(--text);background:var(--bg4)}
+.print-pos{display:flex;gap:6px}
+.pos-btn{flex:1;background:var(--bg4);border:1px solid var(--border);border-radius:8px;padding:7px 6px;cursor:pointer;text-align:center;transition:all .2s;font-family:'Nunito',sans-serif}
+.pos-btn:hover{border-color:var(--border2)}
+.pos-btn.selected{border-color:var(--accent);background:rgba(26,86,186,.07)}
+.pos-btn .pos-label{font-size:11px;color:var(--text2);font-weight:600}
+.pos-btn.selected .pos-label{color:var(--accent)}
+.size-info-btn{background:none;border:1px solid var(--border2);color:var(--text2);font-size:11px;padding:3px 9px;border-radius:6px;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
+.size-info-btn:hover{border-color:var(--accent);color:var(--accent)}
+.image-modal-box{max-width:600px}
+.image-modal-box img{width:100%;border-radius:8px;display:block;margin-top:.5rem}
 @media(max-width:500px){.designs-grid{grid-template-columns:repeat(2,1fr)}.order-row{flex-direction:column}.order-field{width:100%}}
 
 </style>
@@ -146,7 +156,13 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
     <div class="form-section-header">Your Details</div>
     <div class="field"><label>Full Name <span class="req">*</span></label><input type="text" id="custName" placeholder="e.g. Amir bin Hassan"></div>
     <div class="field"><label>Email Address <span class="req">*</span></label><input type="email" id="custEmail" placeholder="your@email.com"></div>
-    <div class="field"><label>Shipping Country <span class="req">*</span></label>
+    <div class="field"><label>Phone Number <span class="req">*</span></label><input type="text" id="custPhone" placeholder="e.g. 012-3456789"></div>
+    <div class="field"><label>Address Line 1 <span class="req">*</span></label><input type="text" id="custAddr1" placeholder="Unit/house no., building name"></div>
+    <div class="field"><label>Address Line 2</label><input type="text" id="custAddr2" placeholder="Street name"></div>
+    <div class="field"><label>City <span class="req">*</span></label><input type="text" id="custCity" placeholder="e.g. Klang"></div>
+    <div class="field"><label>Postcode <span class="req">*</span></label><input type="text" id="custPostcode" placeholder="e.g. 41200"></div>
+    <div class="field"><label>State <span class="req">*</span></label><input type="text" id="custState" placeholder="e.g. Selangor"></div>
+    <div class="field"><label>Country <span class="req">*</span></label>
       <select id="custCountry">
         <option value="">Select country...</option>
         <option>Malaysia</option><option>Singapore</option><option>Indonesia</option>
@@ -172,34 +188,53 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
     <button class="submit-btn" id="submitBtn" onclick="submitOrder()">Submit Order</button>
   </div>
 </div>
+
+<!-- Size guide modal: shared shell, two swappable bodies (adult / kids) toggled via openSizeModal() -->
 <div class="modal-overlay" id="sizeModal" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="modal-box">
     <button class="modal-close" onclick="document.getElementById('sizeModal').classList.remove('open')">&#10005;</button>
-    <div class="modal-title">&#128208; Size Guide</div>
-    <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
-      <svg width="90" height="82" viewBox="0 0 110 100" fill="none" style="flex-shrink:0">
-        <path d="M35 10 L15 30 L25 35 L25 90 L85 90 L85 35 L95 30 L75 10 Q65 18 55 18 Q45 18 35 10Z" stroke="#1a56ba" stroke-width="1.5" fill="rgba(26,86,186,0.05)"/>
-        <line x1="30" y1="35" x2="80" y2="35" stroke="#f0a830" stroke-width="1" stroke-dasharray="3,3"/>
-        <line x1="55" y1="35" x2="55" y2="88" stroke="#d03030" stroke-width="1" stroke-dasharray="3,3"/>
-        <text x="55" y="8" text-anchor="middle" font-size="9" fill="#3a5080" font-family="Nunito">Shoulder</text>
-        <text x="16" y="60" text-anchor="middle" font-size="8" fill="#1a56ba" font-family="Nunito" transform="rotate(-90,16,60)">Chest</text>
-        <text x="98" y="65" text-anchor="middle" font-size="8" fill="#d03030" font-family="Nunito" transform="rotate(90,98,65)">Length</text>
-      </svg>
-      <div style="flex:1;min-width:200px">
-        <table class="size-table">
-          <thead><tr><th>Size</th><th>S</th><th>M</th><th>L</th><th>XL</th><th>2XL</th><th>3XL</th><th>5XL</th></tr></thead>
-          <tbody>
-            <tr><td>Chest</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>26</td></tr>
-            <tr><td>Length</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td>33</td></tr>
-            <tr><td>Shoulder</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>24</td></tr>
-          </tbody>
-        </table>
-        <p class="size-note">* Measurements in inches &nbsp;&middot;&nbsp; Tolerance &plusmn;0.5 inch</p>
+    <div class="modal-title" id="sizeModalTitle">&#128208; Adult Size Guide</div>
+    <div id="sizeModalAdultBody" style="display:block">
+      <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+        <svg width="90" height="82" viewBox="0 0 110 100" fill="none" style="flex-shrink:0">
+          <path d="M35 10 L15 30 L25 35 L25 90 L85 90 L85 35 L95 30 L75 10 Q65 18 55 18 Q45 18 35 10Z" stroke="#1a56ba" stroke-width="1.5" fill="rgba(26,86,186,0.05)"/>
+          <line x1="30" y1="35" x2="80" y2="35" stroke="#f0a830" stroke-width="1" stroke-dasharray="3,3"/>
+          <line x1="55" y1="35" x2="55" y2="88" stroke="#d03030" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="55" y="8" text-anchor="middle" font-size="9" fill="#3a5080" font-family="Nunito">Shoulder</text>
+          <text x="16" y="60" text-anchor="middle" font-size="8" fill="#1a56ba" font-family="Nunito" transform="rotate(-90,16,60)">Chest</text>
+          <text x="98" y="65" text-anchor="middle" font-size="8" fill="#d03030" font-family="Nunito" transform="rotate(90,98,65)">Length</text>
+        </svg>
+        <div style="flex:1;min-width:200px">
+          <table class="size-table">
+            <thead><tr><th>Size</th><th>S</th><th>M</th><th>L</th><th>XL</th><th>2XL</th><th>3XL</th><th>5XL</th></tr></thead>
+            <tbody>
+              <tr><td>Chest</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>26</td></tr>
+              <tr><td>Length</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td>31</td><td>33</td></tr>
+              <tr><td>Shoulder</td><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>24</td></tr>
+            </tbody>
+          </table>
+          <p class="size-note">* Measurements in inches &nbsp;&middot;&nbsp; Tolerance &plusmn;0.5 inch</p>
+        </div>
       </div>
+    </div>
+    <div id="sizeModalKidsBody" style="display:none">
+      <img src="images/Size_Chart_Kids.png" alt="Kids Size Chart" style="width:100%;border-radius:8px;display:block">
+      <p class="size-note">* Kids sizing shown as age range (years) &nbsp;&middot;&nbsp; Tolerance may vary by design</p>
     </div>
   </div>
 </div>
+
+<!-- Generic reference-image modal: reused for BG3 front/back design references -->
+<div class="modal-overlay" id="imageModal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box image-modal-box">
+    <button class="modal-close" onclick="document.getElementById('imageModal').classList.remove('open')">&#10005;</button>
+    <div class="modal-title" id="imageModalTitle">Reference</div>
+    <img id="imageModalImg" src="" alt="">
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
+
 <script>
 const DESIGNS = [
   {
@@ -211,7 +246,9 @@ const DESIGNS = [
     "category": "anime",
     "colors": null,
     "variants": null,
-    "noFlip": true
+    "noFlip": true,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "kingdom-hearts",
@@ -222,7 +259,9 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": true
+    "noFlip": true,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "final-fantasy",
@@ -233,31 +272,35 @@ const DESIGNS = [
     "category": "anime",
     "colors": null,
     "variants": null,
-    "noFlip": true
+    "noFlip": true,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
-    "id": "evangelion",
-    "name": "Evangelion",
-    "color": "Black",
+    "id": "evangelion-unit-01",
+    "name": "Evangelion EVA Unit 01",
+    "color": "Navy",
     "front": "images/Evangelion%20Front.png",
     "back": "images/Evangelion%20Back.png",
     "category": "anime",
-    "colors": [
-      {
-        "label": "Original",
-        "hex": "#1a2a4a",
-        "front": "images/Evangelion%20Front.png",
-        "back": "images/Evangelion%20Back.png"
-      },
-      {
-        "label": "EVA Unit 02",
-        "hex": "#8B1a1a",
-        "front": "images/EVA-Unit-02.png",
-        "back": "images/EVA-Unit-02-Back.png"
-      }
-    ],
+    "colors": null,
+    "noFlip": false,
     "variants": null,
-    "noFlip": false
+    "variantGroups": null,
+    "kidsSizes": false
+  },
+  {
+    "id": "evangelion-unit-02",
+    "name": "Evangelion EVA Unit 02",
+    "color": "Red",
+    "front": "images/EVA-Unit-02.png",
+    "back": "images/EVA-Unit-02-Back.png",
+    "category": "anime",
+    "colors": null,
+    "noFlip": false,
+    "variants": null,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "hades",
@@ -268,29 +311,22 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "zelda-botw",
-    "name": "Zelda BOTW Unit 1",
+    "name": "Zelda BOTW",
     "color": "Navy",
     "front": "images/Zelda%20BOTW%20Front.png",
     "back": "images/Zelda%20BOTW%20Back.png",
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
-  },
-  {
-    "id": "zelda-botw-2",
-    "name": "Zelda BOTW Unit 2",
-    "color": "Navy",
-    "front": "images/Zelda%20BOTW%20Front.png",
-    "back": "images/Zelda%20BOTW%20Back.png",
-    "category": "game",
-    "colors": null,
-    "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "god-of-war",
@@ -301,7 +337,9 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "dmc",
@@ -312,7 +350,9 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "monster-hunter",
@@ -323,7 +363,9 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "mgs-vintage",
@@ -334,7 +376,9 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "mgs-black",
@@ -345,7 +389,9 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "kpop-demon",
@@ -356,7 +402,9 @@ const DESIGNS = [
     "category": "kpop",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "rocketboo",
@@ -380,7 +428,9 @@ const DESIGNS = [
       }
     ],
     "variants": null,
-    "noFlip": true
+    "noFlip": true,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "dmc-dante",
@@ -391,7 +441,9 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "dmc-vergil",
@@ -402,91 +454,51 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
-    "id": "bg3-front",
+    "id": "bg3",
     "name": "Baldur's Gate 3",
     "color": "Black",
     "front": "images/Baldurs%20gate%203%20front%20logo.png",
-    "back": "",
+    "back": "images/Baldurs%20gate%203%20Back%20Colored.png",
     "category": "game",
     "colors": null,
-    "variants": [
+    "noFlip": false,
+    "variants": null,
+    "variantGroups": [
       {
-        "label": "BG3 Logo",
-        "img": "images/Baldurs%20gate%203%20front%20logo.png"
+        "key": "front",
+        "label": "Front Design",
+        "referenceImg": "images/Balders_Gate_Front.png",
+        "options": [
+          "Rogue",
+          "Paladin",
+          "Barbarian",
+          "Fighter",
+          "Druid",
+          "Sorcerer",
+          "Monk",
+          "Ranger",
+          "Cleric",
+          "Bard",
+          "Warlock",
+          "Wizard"
+        ]
       },
       {
-        "label": "Fighter",
-        "img": "images/Baldurs%20gate%203%20front%20fighter.png"
-      },
-      {
-        "label": "Rogue",
-        "img": ""
-      },
-      {
-        "label": "Paladin",
-        "img": ""
-      },
-      {
-        "label": "Barbarian",
-        "img": ""
-      },
-      {
-        "label": "Druid",
-        "img": ""
-      },
-      {
-        "label": "Sorcerer",
-        "img": ""
-      },
-      {
-        "label": "Monk",
-        "img": ""
-      },
-      {
-        "label": "Ranger",
-        "img": ""
-      },
-      {
-        "label": "Cleric",
-        "img": ""
-      },
-      {
-        "label": "Bard",
-        "img": ""
-      },
-      {
-        "label": "Warlock",
-        "img": ""
-      },
-      {
-        "label": "Wizard",
-        "img": ""
+        "key": "back",
+        "label": "Back Design",
+        "referenceImg": "images/Baldurs_Gate_Back.png",
+        "options": [
+          "Colored",
+          "Gold"
+        ]
       }
     ],
-    "noFlip": true
-  },
-  {
-    "id": "bg3-back",
-    "name": "Baldur's Gate 3",
-    "color": "Black",
-    "front": "images/Baldurs%20gate%203%20Back%20Colored.png",
-    "back": "",
-    "category": "game",
-    "colors": null,
-    "variants": [
-      {
-        "label": "Colored",
-        "img": "images/Baldurs%20gate%203%20Back%20Colored.png"
-      },
-      {
-        "label": "Gold",
-        "img": "images/Baldurs%20gate%203%20Back%20Gold.png"
-      }
-    ],
-    "noFlip": true
+    "kidsSizes": false
   },
   {
     "id": "aemeath",
@@ -497,7 +509,9 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "animal-crossing",
@@ -508,7 +522,9 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": true
+    "noFlip": true,
+    "variantGroups": null,
+    "kidsSizes": false
   },
   {
     "id": "pokopia",
@@ -519,7 +535,9 @@ const DESIGNS = [
     "category": "original",
     "colors": null,
     "variants": null,
-    "noFlip": true
+    "noFlip": true,
+    "variantGroups": null,
+    "kidsSizes": true
   },
   {
     "id": "wuthering-waves",
@@ -530,16 +548,33 @@ const DESIGNS = [
     "category": "game",
     "colors": null,
     "variants": null,
-    "noFlip": false
+    "noFlip": false,
+    "variantGroups": null,
+    "kidsSizes": false
   }
 ];
-const SIZES = ['S','M','L','XL','2XL','3XL','5XL'];
+const ADULT_SIZES = ['S','M','L','XL','2XL','3XL','5XL'];
+const KIDS_SIZES = ['5-6','7-8','9-10','11-12','13-14'];
 const CAT = {anime:'#6a9fd8',game:'#c46bb2',original:'#5dbf87',kpop:'#e87878'};
 const cardState = {};
 let sel = {}, rowId = 0;
 
+// Builds a fresh row for a design. variantSelections is keyed by variant group key
+// (e.g. {front:'', back:''} for BG3) rather than a single hardcoded field, so any
+// design with N independent variant pickers works without special-casing.
 function mkRow(d, colorLabel) {
-  return {id:'r'+(rowId++), size:'', qty:1, variant:d.variants?'':null, colorLabel:colorLabel||d.color};
+  const variantSelections = {};
+  if (d.variantGroups) {
+    d.variantGroups.forEach(function(g) { variantSelections[g.key] = ''; });
+  }
+  return {
+    id: 'r' + (rowId++),
+    sizeType: 'adult',   // 'adult' | 'kids' — only relevant when d.kidsSizes is true
+    size: '',
+    qty: 1,
+    variantSelections: variantSelections,
+    colorLabel: colorLabel || d.color
+  };
 }
 
 function currentImgs(d, st) {
@@ -649,7 +684,7 @@ function renderDesigns() {
     subEl.appendChild(document.createTextNode(colorLabel));
     body.appendChild(nameEl);
     body.appendChild(subEl);
-    if (d.variants) {
+    if (d.variantGroups && d.variantGroups.length) {
       const badge = document.createElement('span');
       badge.style.cssText = 'font-size:10px;background:rgba(26,86,186,.1);color:#1a56ba;padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block';
       badge.textContent = 'Has variants';
@@ -718,13 +753,24 @@ function renderOrder() {
     titleWrap.appendChild(titleEl); titleWrap.appendChild(subEl);
     const actions = document.createElement('div');
     actions.className = 'order-item-actions';
-    const guideBtn = document.createElement('button');
-    guideBtn.className = 'btn-guide'; guideBtn.textContent = '\u{1F4D0} Size guide';
-    guideBtn.onclick = function(){ document.getElementById('sizeModal').classList.add('open'); };
+    if (d.kidsSizes) {
+      const adultGuideBtn = document.createElement('button');
+      adultGuideBtn.className = 'btn-guide'; adultGuideBtn.textContent = '\u{1F4D0} Adult size guide';
+      adultGuideBtn.onclick = function(){ openSizeModal('adult'); };
+      const kidsGuideBtn = document.createElement('button');
+      kidsGuideBtn.className = 'btn-guide'; kidsGuideBtn.textContent = '\u{1F4D0} Kids size guide';
+      kidsGuideBtn.onclick = function(){ openSizeModal('kids'); };
+      actions.appendChild(adultGuideBtn); actions.appendChild(kidsGuideBtn);
+    } else {
+      const guideBtn = document.createElement('button');
+      guideBtn.className = 'btn-guide'; guideBtn.textContent = '\u{1F4D0} Size guide';
+      guideBtn.onclick = function(){ openSizeModal('adult'); };
+      actions.appendChild(guideBtn);
+    }
     const removeBtn = document.createElement('button');
     removeBtn.className = 'remove-btn'; removeBtn.textContent = '\u2715 Remove';
     removeBtn.onclick = (function(cid){ return function(){ toggleDesign(cid); }; })(id);
-    actions.appendChild(guideBtn); actions.appendChild(removeBtn);
+    actions.appendChild(removeBtn);
     hdr.appendChild(titleWrap); hdr.appendChild(actions);
     el.appendChild(hdr);
 
@@ -734,12 +780,39 @@ function renderOrder() {
       const orderRow = document.createElement('div');
       orderRow.className = 'order-row';
 
+      // Size-type toggle (Adult / Kids) — only rendered for designs flagged kidsSizes.
+      // Switching type clears the previously picked size, since an adult "L" is not
+      // a valid kids size and silently carrying it over would misrepresent the order.
+      if (d.kidsSizes) {
+        const typeField = document.createElement('div');
+        typeField.className = 'order-field'; typeField.style.cssText = 'min-width:120px';
+        const typeLbl = document.createElement('label'); typeLbl.textContent = 'Size Type';
+        const typeBtns = document.createElement('div'); typeBtns.className = 'print-pos';
+        [['adult','Adult'],['kids','Kids']].forEach(function(pair) {
+          const val = pair[0], label = pair[1];
+          const btn = document.createElement('div');
+          btn.className = 'pos-btn' + (row.sizeType === val ? ' selected' : '');
+          btn.innerHTML = '<div class="pos-label">' + label + '</div>';
+          btn.onclick = (function(cid, rid, v) {
+            return function() {
+              setField(cid, rid, 'sizeType', v);
+              setField(cid, rid, 'size', '');
+              renderOrder();
+            };
+          })(id, row.id, val);
+          typeBtns.appendChild(btn);
+        });
+        typeField.appendChild(typeLbl); typeField.appendChild(typeBtns);
+        orderRow.appendChild(typeField);
+      }
+
       const sizeField = document.createElement('div');
       sizeField.className = 'order-field'; sizeField.style.cssText = 'flex:2;min-width:110px';
       const sizeLbl = document.createElement('label');
       sizeLbl.innerHTML = 'Size <span style="color:#1240a0">*</span>';
       const sizeSel = document.createElement('select');
-      sizeSel.innerHTML = '<option value="">Pick size&hellip;</option>' + SIZES.map(function(s){
+      const sizeOptions = (d.kidsSizes && row.sizeType === 'kids') ? KIDS_SIZES : ADULT_SIZES;
+      sizeSel.innerHTML = '<option value="">Pick size&hellip;</option>' + sizeOptions.map(function(s){
         return '<option value="'+s+'"'+(row.size===s?' selected':'')+'>'+s+'</option>';
       }).join('');
       sizeSel.onchange = (function(cid,rid){ return function(){ setField(cid,rid,'size',this.value); }; })(id,row.id);
@@ -767,20 +840,48 @@ function renderOrder() {
       }
       rowEl.appendChild(orderRow);
 
-      if (d.variants) {
-        const varWrap = document.createElement('div'); varWrap.style.marginTop='8px';
-        const varLbl = document.createElement('div'); varLbl.className='variant-label';
-        varLbl.innerHTML = 'Design Variant <span style="color:#1240a0">*</span>';
-        const varGrid = document.createElement('div'); varGrid.className='variant-grid';
-        d.variants.forEach(function(v) {
-          const vBtn = document.createElement('button');
-          vBtn.className = 'variant-btn'+(row.variant===v.label?' selected':'');
-          vBtn.textContent = v.label;
-          vBtn.onclick = (function(cid,rid,label){ return function(){ setField(cid,rid,'variant',label); renderOrder(); }; })(id,row.id,v.label);
-          varGrid.appendChild(vBtn);
+      // Generalized variant groups: a design can have zero, one, or many independent
+      // variant pickers (e.g. BG3 has Front Design + Back Design). Each group renders
+      // its own labeled button grid plus an optional "View reference" trigger that
+      // opens the shared image modal scoped to that group's reference image.
+      if (d.variantGroups && d.variantGroups.length) {
+        d.variantGroups.forEach(function(group) {
+          const varWrap = document.createElement('div'); varWrap.style.marginTop = '8px';
+          const varLblRow = document.createElement('div');
+          varLblRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:5px';
+          const varLbl = document.createElement('div'); varLbl.className = 'variant-label';
+          varLbl.style.marginBottom = '0';
+          varLbl.innerHTML = group.label + ' <span style="color:#1240a0">*</span>';
+          varLblRow.appendChild(varLbl);
+          if (group.referenceImg) {
+            const refBtn = document.createElement('button');
+            refBtn.className = 'size-info-btn';
+            refBtn.textContent = '\u{1F5BC} View reference';
+            refBtn.onclick = (function(img, label) {
+              return function() { openImageModal(img, label); };
+            })(group.referenceImg, group.label);
+            varLblRow.appendChild(refBtn);
+          }
+          varWrap.appendChild(varLblRow);
+          const varGrid = document.createElement('div'); varGrid.className = 'variant-grid';
+          group.options.forEach(function(opt) {
+            const vBtn = document.createElement('button');
+            const selected = row.variantSelections[group.key] === opt;
+            vBtn.className = 'variant-btn' + (selected ? ' selected' : '');
+            vBtn.textContent = opt;
+            vBtn.onclick = (function(cid, rid, gkey, val) {
+              return function() {
+                if (!sel[cid]) return;
+                const r = sel[cid].rows.find(function(rr){ return rr.id === rid; });
+                if (r) r.variantSelections[gkey] = val;
+                renderOrder();
+              };
+            })(id, row.id, group.key, opt);
+            varGrid.appendChild(vBtn);
+          });
+          varWrap.appendChild(varGrid);
+          rowEl.appendChild(varWrap);
         });
-        varWrap.appendChild(varLbl); varWrap.appendChild(varGrid);
-        rowEl.appendChild(varWrap);
       }
       el.appendChild(rowEl);
     });
@@ -795,44 +896,118 @@ function renderOrder() {
 
 function toggleSizeChart(){ document.getElementById('sizeChartInner').classList.toggle('open'); }
 
+// Opens the size guide modal scoped to 'adult' or 'kids'. Both share the same
+// modal shell; only the image/table swapped inside it.
+function openSizeModal(type) {
+  const modal = document.getElementById('sizeModal');
+  const adultBody = document.getElementById('sizeModalAdultBody');
+  const kidsBody = document.getElementById('sizeModalKidsBody');
+  const title = document.getElementById('sizeModalTitle');
+  if (type === 'kids') {
+    adultBody.style.display = 'none';
+    kidsBody.style.display = 'block';
+    title.textContent = '\u{1F4D0} Kids Size Guide';
+  } else {
+    adultBody.style.display = 'block';
+    kidsBody.style.display = 'none';
+    title.textContent = '\u{1F4D0} Adult Size Guide';
+  }
+  modal.classList.add('open');
+}
+
+// Generic reference-image modal, reused for BG3's front/back design references
+// (and any future design that needs to show a reference sheet before picking a variant).
+function openImageModal(src, label) {
+  const modal = document.getElementById('imageModal');
+  const titleEl = document.getElementById('imageModalTitle');
+  const imgEl = document.getElementById('imageModalImg');
+  titleEl.textContent = label;
+  imgEl.src = src;
+  imgEl.alt = label;
+  modal.classList.add('open');
+}
+
 const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 
 async function submitOrder() {
-  const name=document.getElementById('custName').value.trim();
-  const email=document.getElementById('custEmail').value.trim();
-  const country=document.getElementById('custCountry').value;
-  const notes=document.getElementById('extraNotes').value.trim();
-  const keys=Object.keys(sel);
-  if(!name||!email||!country){alert('Please fill in your name, email, and country.');return;}
-  if(!keys.length){alert('Please select at least one design.');return;}
-  for(let i=0;i<keys.length;i++){
-    const e=sel[keys[i]];
-    for(let j=0;j<e.rows.length;j++){
-      const r=e.rows[j];
-      if(!r.size){alert('Please select a size for: '+e.d.name);return;}
-      if(e.d.variants&&!r.variant){alert('Please select a variant for: '+e.d.name);return;}
+  const name = document.getElementById('custName').value.trim();
+  const email = document.getElementById('custEmail').value.trim();
+  const phone = document.getElementById('custPhone').value.trim();
+  const addr1 = document.getElementById('custAddr1').value.trim();
+  const addr2 = document.getElementById('custAddr2').value.trim();
+  const city = document.getElementById('custCity').value.trim();
+  const postcode = document.getElementById('custPostcode').value.trim();
+  const state = document.getElementById('custState').value.trim();
+  const country = document.getElementById('custCountry').value;
+  const notes = document.getElementById('extraNotes').value.trim();
+  const keys = Object.keys(sel);
+
+  if (!name || !email || !phone || !addr1 || !city || !postcode || !state || !country) {
+    alert('Please fill in all required fields: name, email, phone, address, city, postcode, state, and country.');
+    return;
+  }
+  if (!keys.length) { alert('Please select at least one design.'); return; }
+
+  for (let i = 0; i < keys.length; i++) {
+    const e = sel[keys[i]];
+    for (let j = 0; j < e.rows.length; j++) {
+      const r = e.rows[j];
+      if (!r.size) { alert('Please select a size for: ' + e.d.name); return; }
+      if (e.d.variantGroups) {
+        for (let k = 0; k < e.d.variantGroups.length; k++) {
+          const g = e.d.variantGroups[k];
+          if (!r.variantSelections[g.key]) {
+            alert('Please select a ' + g.label + ' for: ' + e.d.name);
+            return;
+          }
+        }
+      }
     }
   }
-  const lines=keys.map(function(id){
-    return sel[id].rows.map(function(r){
-      const d=sel[id].d;
-      return d.name+' | '+(r.colorLabel||d.color)+(d.variants?' | Variant: '+r.variant:'')+' | Size: '+r.size+' | Qty: '+r.qty;
+
+  const lines = keys.map(function(id) {
+    return sel[id].rows.map(function(r) {
+      const d = sel[id].d;
+      let variantStr = '';
+      if (d.variantGroups) {
+        variantStr = d.variantGroups.map(function(g) {
+          return ' | ' + g.label + ': ' + r.variantSelections[g.key];
+        }).join('');
+      }
+      const sizeLabel = (d.kidsSizes && r.sizeType === 'kids') ? 'Kids ' + r.size : r.size;
+      return d.name + ' | ' + (r.colorLabel || d.color) + variantStr + ' | Size: ' + sizeLabel + ' | Qty: ' + r.qty;
     }).join('\n');
   }).join('\n');
-  const total=keys.reduce(function(s,id){return s+sel[id].rows.length;},0);
-  const btn=document.getElementById('submitBtn');
-  btn.textContent='Submitting...'; btn.disabled=true;
-  if(!SCRIPT_URL||SCRIPT_URL==='YOUR_GOOGLE_APPS_SCRIPT_URL_HERE'){
+
+  const total = keys.reduce(function(s, id) { return s + sel[id].rows.length; }, 0);
+  const btn = document.getElementById('submitBtn');
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    name: name, email: email, phone: phone,
+    addressLine1: addr1, addressLine2: addr2, city: city, postcode: postcode, state: state, country: country,
+    orderLines: lines, itemCount: total, notes: notes
+  };
+
+  if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
     showToast('Dev mode \u2014 set SCRIPT_URL to enable real submissions.');
-    btn.textContent='Submit Order'; btn.disabled=false; return;
+    btn.textContent = 'Submit Order'; btn.disabled = false;
+    return;
   }
-  try{
-    await fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({timestamp:new Date().toISOString(),name:name,email:email,country:country,orderLines:lines,itemCount:total,notes:notes})});
+  try {
+    await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
     showToast('Order submitted! We will be in touch soon.');
-    sel={}; renderDesigns(); renderOrder();
-    ['custName','custEmail','custCountry','extraNotes'].forEach(function(id){document.getElementById(id).value='';});
-  }catch(err){alert('Something went wrong. Please try again.');}
-  finally{btn.textContent='Submit Order'; btn.disabled=false;}
+    sel = {}; renderDesigns(); renderOrder();
+    ['custName','custEmail','custPhone','custAddr1','custAddr2','custCity','custPostcode','custState','custCountry','extraNotes'].forEach(function(id) {
+      document.getElementById(id).value = '';
+    });
+  } catch(err) {
+    alert('Something went wrong. Please try again.');
+  } finally {
+    btn.textContent = 'Submit Order'; btn.disabled = false;
+  }
 }
 
 function showToast(msg){
