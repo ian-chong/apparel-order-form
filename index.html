@@ -47,8 +47,8 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
 .design-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
 .design-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--text3);font-size:11px;text-align:center;padding:8px}
 .placeholder-icon{font-size:32px;opacity:.3}
-.img-flip-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,.85);border:none;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:background .2s,transform .2s}
-.img-flip-btn:hover{background:rgba(255,255,255,.98);transform:translate(-50%,-50%) scale(1.1)}
+.img-flip-btn{position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,.88);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.2);transition:background .2s,transform .2s}
+.img-flip-btn:hover{background:rgba(255,255,255,.98);transform:scale(1.1)}
 .img-flip-btn svg{width:20px;height:20px;display:block}
 .swatch-row{display:flex;gap:6px;padding:7px 10px;background:var(--bg4);border-top:1px solid var(--border);align-items:center}
 .swatch{width:18px;height:18px;border-radius:50%;border:2px solid #aab0bc;cursor:pointer;transition:border-color .15s,transform .15s;flex-shrink:0;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
@@ -236,7 +236,7 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
 <div class="toast" id="toast"></div>
 
 <script>
-const DESIGNS = [
+const DESIGNS =[
   {
     "id": "gundam-aerial",
     "name": "Gundam Aerial",
@@ -248,7 +248,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": true,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "kingdom-hearts",
@@ -261,7 +262,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": true,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "final-fantasy",
@@ -274,7 +276,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": true,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "evangelion-unit-01",
@@ -287,12 +290,13 @@ const DESIGNS = [
     "noFlip": false,
     "variants": null,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "evangelion-unit-02",
     "name": "Evangelion EVA Unit 02",
-    "color": "Red",
+    "color": "Black",
     "front": "images/EVA-Unit-02.png",
     "back": "images/EVA-Unit-02-Back.png",
     "category": "anime",
@@ -300,7 +304,8 @@ const DESIGNS = [
     "noFlip": false,
     "variants": null,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "hades",
@@ -313,7 +318,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": true
   },
   {
     "id": "zelda-botw",
@@ -326,7 +332,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": true
   },
   {
     "id": "god-of-war",
@@ -339,7 +346,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": true
   },
   {
     "id": "dmc",
@@ -352,7 +360,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": true
   },
   {
     "id": "monster-hunter",
@@ -365,7 +374,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "mgs-vintage",
@@ -378,7 +388,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "mgs-black",
@@ -391,7 +402,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "kpop-demon",
@@ -404,7 +416,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": true
   },
   {
     "id": "rocketboo",
@@ -430,7 +443,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": true,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "dmc-dante",
@@ -443,7 +457,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": true
   },
   {
     "id": "dmc-vergil",
@@ -456,7 +471,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": true
   },
   {
     "id": "bg3",
@@ -498,7 +514,8 @@ const DESIGNS = [
         ]
       }
     ],
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "aemeath",
@@ -511,7 +528,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "animal-crossing",
@@ -524,7 +542,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": true,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   },
   {
     "id": "pokopia",
@@ -537,7 +556,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": true,
     "variantGroups": null,
-    "kidsSizes": true
+    "kidsSizes": true,
+    "defaultBack": false
   },
   {
     "id": "wuthering-waves",
@@ -550,7 +570,8 @@ const DESIGNS = [
     "variants": null,
     "noFlip": false,
     "variantGroups": null,
-    "kidsSizes": false
+    "kidsSizes": false,
+    "defaultBack": false
   }
 ];
 const ADULT_SIZES = ['S','M','L','XL','2XL','3XL','5XL'];
@@ -589,7 +610,7 @@ function renderDesigns() {
   const g = document.getElementById('designsGrid');
   g.innerHTML = '';
   DESIGNS.forEach(function(d) {
-    if (!cardState[d.id]) cardState[d.id] = {showBack:false, colorIdx:0};
+    if (!cardState[d.id]) cardState[d.id] = {showBack: !!d.defaultBack, colorIdx:0};
     const st = cardState[d.id];
     const isSelected = !!sel[d.id];
     const imgs = currentImgs(d, st);
