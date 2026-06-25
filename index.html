@@ -679,12 +679,21 @@ function renderDesigns() {
         sw.className = 'swatch' + (ci === st.colorIdx ? ' active' : '');
         sw.style.background = c.hex;
         sw.title = c.label;
-        sw.onclick = function(e) {
-          e.stopPropagation();
-          cardState[d.id].colorIdx = ci;
-          cardState[d.id].showBack = false;
-          renderDesigns();
-        };
+        sw.onclick = (function(design, colorIndex) {
+          return function(e) {
+            e.stopPropagation();
+            cardState[design.id].colorIdx = colorIndex;
+            cardState[design.id].showBack = false;
+            // If this design is already in the order, sync the colorLabel
+            // on all its rows so the order panel reflects the new swatch.
+            if (sel[design.id]) {
+              const newLabel = design.colors[colorIndex].label;
+              sel[design.id].rows.forEach(function(r) { r.colorLabel = newLabel; });
+            }
+            renderDesigns();
+            renderOrder();
+          };
+        })(d, ci);
         swatchRow.appendChild(sw);
       });
       card.appendChild(swatchRow);
