@@ -588,13 +588,17 @@ function mkRow(d, colorLabel) {
   if (d.variantGroups) {
     d.variantGroups.forEach(function(g) { variantSelections[g.key] = ''; });
   }
+  // For multi-colour designs, colourSelection defaults to the active card swatch
+  // (passed in via colorLabel) so the row matches what the customer previewed.
+  const defaultColour = colorLabel || (d.colors && d.colors.length ? d.colors[0].label : d.color);
   return {
     id: 'r' + (rowId++),
-    sizeType: 'adult',   // 'adult' | 'kids' — only relevant when d.kidsSizes is true
+    sizeType: 'adult',
     size: '',
     qty: 1,
     variantSelections: variantSelections,
-    colorLabel: colorLabel || d.color
+    colorLabel: defaultColour,
+    colourSelection: (d.colors && d.colors.length) ? defaultColour : null
   };
 }
 
@@ -781,7 +785,10 @@ function renderOrder() {
     const subEl = document.createElement('div');
     subEl.className = 'order-item-sub';
     // Use colorLabel from first row (reflects active swatch selection)
-    const displayColor = (e.rows && e.rows.length && e.rows[0].colorLabel) ? e.rows[0].colorLabel : d.color;
+    // For multi-colour designs show "Mixed" if rows have different colours selected
+    const rowColours = e.rows.map(function(r){ return r.colourSelection || r.colorLabel || d.color; });
+    const uniqueColours = rowColours.filter(function(c, i, a){ return a.indexOf(c) === i; });
+    const displayColor = uniqueColours.length > 1 ? uniqueColours.join(' + ') : (uniqueColours[0] || d.color);
     subEl.textContent = displayColor;
     titleWrap.appendChild(titleEl); titleWrap.appendChild(subEl);
     const actions = document.createElement('div');
@@ -837,6 +844,37 @@ function renderOrder() {
         });
         typeField.appendChild(typeLbl); typeField.appendChild(typeBtns);
         orderRow.appendChild(typeField);
+      }
+
+      // Colour picker — only rendered for designs with multiple colour options.
+      // Each row has its own independent colour selection so a customer can
+      // order Yellow size M and Heather size L in the same order.
+      if (d.colors && d.colors.length > 1) {
+        const colourField = document.createElement('div');
+        colourField.className = 'order-field'; colourField.style.cssText = 'min-width:120px';
+        const colourLbl = document.createElement('label'); colourLbl.textContent = 'Colour';
+        const colourBtns = document.createElement('div'); colourBtns.className = 'print-pos';
+        d.colors.forEach(function(c) {
+          const btn = document.createElement('div');
+          btn.className = 'pos-btn' + (row.colourSelection === c.label ? ' selected' : '');
+          // Swatch dot + label inside the toggle button
+          const dot = document.createElement('span');
+          dot.style.cssText = 'display:inline-block;width:10px;height:10px;border-radius:50%;background:' + c.hex + ';margin-right:5px;vertical-align:middle;border:1px solid rgba(0,0,0,.15)';
+          const lbl = document.createElement('span');
+          lbl.className = 'pos-label'; lbl.textContent = c.label;
+          btn.appendChild(dot); btn.appendChild(lbl);
+          btn.onclick = (function(cid, rid, colour) {
+            return function() {
+              if (!sel[cid]) return;
+              const r = sel[cid].rows.find(function(rr){ return rr.id === rid; });
+              if (r) { r.colourSelection = colour.label; r.colorLabel = colour.label; }
+              renderOrder();
+            };
+          })(id, row.id, c);
+          colourBtns.appendChild(btn);
+        });
+        colourField.appendChild(colourLbl); colourField.appendChild(colourBtns);
+        orderRow.appendChild(colourField);
       }
 
       const sizeField = document.createElement('div');
@@ -1008,7 +1046,8 @@ async function submitOrder() {
         }).join('');
       }
       const sizeLabel = (d.kidsSizes && r.sizeType === 'kids') ? 'Kids ' + r.size : r.size;
-      return d.name + ' | ' + (r.colorLabel || d.color) + variantStr + ' | Size: ' + sizeLabel + ' | Qty: ' + r.qty;
+      const orderColour = r.colourSelection || r.colorLabel || d.color;
+      return d.name + ' | ' + orderColour + variantStr + ' | Size: ' + sizeLabel + ' | Qty: ' + r.qty;
     }).join('\n');
   }).join('\n');
 
