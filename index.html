@@ -779,7 +779,10 @@ function renderOrder() {
     const titleEl = document.createElement('div');
     titleEl.className = 'order-item-title'; titleEl.textContent = d.name;
     const subEl = document.createElement('div');
-    subEl.className = 'order-item-sub'; subEl.textContent = d.color;
+    subEl.className = 'order-item-sub';
+    // Use colorLabel from first row (reflects active swatch selection)
+    const displayColor = (e.rows && e.rows.length && e.rows[0].colorLabel) ? e.rows[0].colorLabel : d.color;
+    subEl.textContent = displayColor;
     titleWrap.appendChild(titleEl); titleWrap.appendChild(subEl);
     const actions = document.createElement('div');
     actions.className = 'order-item-actions';
