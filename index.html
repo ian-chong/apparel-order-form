@@ -70,24 +70,24 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
 .design-name{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;color:var(--text);line-height:1.2}
 .design-sub{font-size:11px;color:var(--text3);margin-top:2px}
 .order-items{display:flex;flex-direction:column;gap:14px}
-.order-item{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:1rem 1.25rem;animation:slideIn .25s ease}
+.order-item{position:relative;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:1rem 1.25rem;animation:slideIn .25s ease}
 @keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.order-item-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;gap:12px}
-.order-item-title{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--accent)}
+.order-item-header{padding-right:2.5rem;margin-bottom:.5rem}
+.order-item-title{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--accent);line-height:1.25}
 .order-item-sub{font-size:12px;color:var(--text3);margin-top:1px}
-.order-item-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
-.btn-guide{background:none;border:1px solid var(--border2);color:var(--text2);font-size:12px;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
-.btn-guide:hover{border-color:var(--accent);color:var(--accent)}
-.remove-btn{background:none;border:1px solid rgba(208,48,48,.3);color:#d03030;font-size:12px;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
-.remove-btn:hover{background:rgba(208,48,48,.1);border-color:#d03030}
+.item-remove-btn{position:absolute;top:.85rem;right:.85rem;width:26px;height:26px;flex-shrink:0;background:var(--bg4);border:1px solid rgba(208,48,48,.35);color:#d03030;font-size:12px;line-height:1;border-radius:50%;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.item-remove-btn:hover{background:rgba(208,48,48,.12);border-color:#d03030}
+.size-guide-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:.85rem}
+.guide-link{background:none;border:none;padding:0;color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;font-family:'Nunito',sans-serif;display:inline-flex;align-items:center;gap:4px}
+.guide-link:hover{text-decoration:underline}
 .size-row{padding:10px 0}
 .size-row+.size-row{border-top:1px solid var(--border)}
 .order-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
 .order-field{display:flex;flex-direction:column;gap:5px}
 .order-field label{font-size:12px;color:var(--text2);font-weight:600}
-.order-field select{background:var(--bg4);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;padding:7px 10px;outline:none;transition:border-color .2s;min-width:80px}
+.order-field select{background:var(--bg4);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;padding:7px 10px;outline:none;transition:border-color .2s;min-width:80px;width:100%}
 .order-field select:focus{border-color:var(--accent)}
-.btn-remove-row{background:none;border:1px solid rgba(208,48,48,.3);color:#d03030;font-size:14px;width:32px;height:32px;border-radius:6px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.btn-remove-row{background:var(--bg4);border:1px solid rgba(208,48,48,.35);color:#d03030;font-size:13px;width:28px;height:28px;border-radius:50%;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .btn-remove-row:hover{background:rgba(208,48,48,.1);border-color:#d03030}
 .btn-add-size{margin-top:12px;background:none;border:1.5px dashed var(--border2);color:var(--accent);font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;width:100%;transition:all .2s}
 .btn-add-size:hover{background:rgba(26,86,186,.05);border-color:var(--accent)}
@@ -121,7 +121,13 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
 .size-info-btn:hover{border-color:var(--accent);color:var(--accent)}
 .image-modal-box{max-width:600px}
 .image-modal-box img{width:100%;border-radius:8px;display:block;margin-top:.5rem}
-@media(max-width:500px){.designs-grid{grid-template-columns:repeat(2,1fr)}.order-row{flex-direction:column}.order-field{width:100%}}
+@media(max-width:500px){
+  .designs-grid{grid-template-columns:repeat(2,1fr)}
+  .order-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:end}
+  .order-field{width:auto;min-width:0}
+  .order-field-full{grid-column:1/-1}
+  .order-item{padding:.9rem 1rem}
+}
 
 </style>
 </head>
@@ -137,11 +143,11 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
         <li>This order form is only for print-on-demand orders for <strong>2026 AnimeFest+ September</strong>.</li>
         <li>Please make sure you carefully fill out the order form with the correct details and address.</li>
         <li>Full payment is required for all pre-orders.</li>
-        <li>Order cancellations are not allowed after <strong>28th September</strong>, as the order will have already been sent to printing.</li>
+        <li>Order cancellations are not allowed after <strong>27th September</strong>, as the order will have already been sent to printing.</li>
         <li>Products shown are for mock-up purposes only. Some colour variation may occur in the final goods.</li>
         <li>You can expect your order to be delivered in <strong>11&ndash;14 working days (12&ndash;16 October)</strong>.</li>
         <li>Please DM us at <strong>@mishiechua</strong> or <strong>@thegendaisoubiclub</strong> on Instagram, or email <a href="mailto:thegendaisoubiclub@gmail.com">thegendaisoubiclub@gmail.com</a>, for any inquiries or concerns.</li>
-        <li>This form will close after <strong>28th September 2026</strong>.</li>
+        <li>This form will close after <strong>27th September 2026</strong>.</li>
       </ul>
     </div>
     <div class="header-catalog-link"><a href="https://drive.google.com/file/d/1x5p3T73bHh3iFJ67010U6wb53WscbFWb/view" target="_blank">&gt;&gt; View Digital Catalog &lt;&lt;</a></div>
@@ -189,11 +195,10 @@ body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;font
     <div class="field"><label>Postcode <span class="req">*</span></label><input type="text" id="custPostcode" placeholder="e.g. 41200"></div>
     <div class="field"><label>State <span class="req">*</span></label><input type="text" id="custState" placeholder="e.g. Selangor"></div>
     <div class="field"><label>Country <span class="req">*</span></label>
-      <select id="custCountry">
-        <option value="">Select country...</option>
-        <option>Malaysia</option><option>Singapore</option><option>Indonesia</option>
-        <option>Thailand</option><option>Philippines</option><option>Other (International)</option>
-      </select>
+      <div class="print-pos" id="countryToggle">
+        <div class="pos-btn selected" data-country="Malaysia" onclick="setCountry('Malaysia')"><div class="pos-label">Malaysia</div></div>
+        <div class="pos-btn" data-country="Singapore" onclick="setCountry('Singapore')"><div class="pos-label">Singapore</div></div>
+      </div>
     </div>
   </div>
   <div class="form-section">
@@ -644,7 +649,7 @@ const DESIGNS =[
   },
   {
       "id": "silksong-sting-of-grace",
-      "name": "Sting of Grace",
+      "name": "Silksong Sting of Grace",
       "color": "White",
       "front": "images/Silksong-SOG-White-Front.png",
       "back": "images/Silksong-SOG_White-Back.png",
@@ -667,7 +672,7 @@ const DESIGNS =[
       "noFlip": false,
       "variantGroups": null,
       "kidsSizes": false,
-      "defaultBack": false
+      "defaultBack": true
   }
 ];
 const ADULT_SIZES = ['S','M','L','XL','2XL','3XL','5XL'];
@@ -783,7 +788,7 @@ function renderDesigns() {
           return function(e) {
             e.stopPropagation();
             cardState[design.id].colorIdx = colorIndex;
-            cardState[design.id].showBack = false;
+            cardState[design.id].showBack = !!design.defaultBack;
             // If this design is already in the order, sync the colorLabel
             // on all its rows so the order panel reflects the new swatch.
             if (sel[design.id]) {
@@ -873,9 +878,17 @@ function renderOrder() {
     const el = document.createElement('div');
     el.className = 'order-item'; el.id = 'item-' + id;
 
+    // Circular remove button, absolutely positioned in the card's top-right
+    // corner (standard mobile cart-item pattern) so it never competes with
+    // the title for width and can't force the title onto multiple lines.
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'item-remove-btn'; removeBtn.innerHTML = '&#10005;';
+    removeBtn.setAttribute('aria-label', 'Remove ' + d.name);
+    removeBtn.onclick = (function(cid){ return function(){ toggleDesign(cid); }; })(id);
+    el.appendChild(removeBtn);
+
     const hdr = document.createElement('div');
     hdr.className = 'order-item-header';
-    const titleWrap = document.createElement('div');
     const titleEl = document.createElement('div');
     titleEl.className = 'order-item-title'; titleEl.textContent = d.name;
     const subEl = document.createElement('div');
@@ -886,29 +899,28 @@ function renderOrder() {
     const uniqueColours = rowColours.filter(function(c, i, a){ return a.indexOf(c) === i; });
     const displayColor = uniqueColours.length > 1 ? uniqueColours.join(' + ') : (uniqueColours[0] || d.color);
     subEl.textContent = displayColor;
-    titleWrap.appendChild(titleEl); titleWrap.appendChild(subEl);
-    const actions = document.createElement('div');
-    actions.className = 'order-item-actions';
+    hdr.appendChild(titleEl); hdr.appendChild(subEl);
+    el.appendChild(hdr);
+
+    // Size guide link(s) — small inline text links under the title rather than
+    // pill buttons competing with the remove control for header space.
+    const guideRow = document.createElement('div');
+    guideRow.className = 'size-guide-row';
     if (d.kidsSizes) {
       const adultGuideBtn = document.createElement('button');
-      adultGuideBtn.className = 'btn-guide'; adultGuideBtn.textContent = '\u{1F4D0} Adult size guide';
+      adultGuideBtn.className = 'guide-link'; adultGuideBtn.textContent = '\u{1F4D0} Adult size guide';
       adultGuideBtn.onclick = function(){ openSizeModal('adult'); };
       const kidsGuideBtn = document.createElement('button');
-      kidsGuideBtn.className = 'btn-guide'; kidsGuideBtn.textContent = '\u{1F4D0} Kids size guide';
+      kidsGuideBtn.className = 'guide-link'; kidsGuideBtn.textContent = '\u{1F4D0} Kids size guide';
       kidsGuideBtn.onclick = function(){ openSizeModal('kids'); };
-      actions.appendChild(adultGuideBtn); actions.appendChild(kidsGuideBtn);
+      guideRow.appendChild(adultGuideBtn); guideRow.appendChild(kidsGuideBtn);
     } else {
       const guideBtn = document.createElement('button');
-      guideBtn.className = 'btn-guide'; guideBtn.textContent = '\u{1F4D0} Size guide';
+      guideBtn.className = 'guide-link'; guideBtn.textContent = '\u{1F4D0} Size guide';
       guideBtn.onclick = function(){ openSizeModal('adult'); };
-      actions.appendChild(guideBtn);
+      guideRow.appendChild(guideBtn);
     }
-    const removeBtn = document.createElement('button');
-    removeBtn.className = 'remove-btn'; removeBtn.textContent = '\u2715 Remove';
-    removeBtn.onclick = (function(cid){ return function(){ toggleDesign(cid); }; })(id);
-    actions.appendChild(removeBtn);
-    hdr.appendChild(titleWrap); hdr.appendChild(actions);
-    el.appendChild(hdr);
+    el.appendChild(guideRow);
 
     e.rows.forEach(function(row) {
       const rowEl = document.createElement('div');
@@ -921,7 +933,7 @@ function renderOrder() {
       // a valid kids size and silently carrying it over would misrepresent the order.
       if (d.kidsSizes) {
         const typeField = document.createElement('div');
-        typeField.className = 'order-field'; typeField.style.cssText = 'min-width:120px';
+        typeField.className = 'order-field order-field-full'; typeField.style.cssText = 'min-width:120px';
         const typeLbl = document.createElement('label'); typeLbl.textContent = 'Size Type';
         const typeBtns = document.createElement('div'); typeBtns.className = 'print-pos';
         [['adult','Adult'],['kids','Kids']].forEach(function(pair) {
@@ -947,7 +959,7 @@ function renderOrder() {
       // order Yellow size M and Heather size L in the same order.
       if (d.colors && d.colors.length > 1) {
         const colourField = document.createElement('div');
-        colourField.className = 'order-field'; colourField.style.cssText = 'min-width:120px';
+        colourField.className = 'order-field order-field-full'; colourField.style.cssText = 'min-width:120px';
         const colourLbl = document.createElement('label'); colourLbl.textContent = 'Colour';
         const colourBtns = document.createElement('div'); colourBtns.className = 'print-pos';
         d.colors.forEach(function(c) {
@@ -999,7 +1011,7 @@ function renderOrder() {
 
       if (e.rows.length > 1) {
         const rmField = document.createElement('div');
-        rmField.className = 'order-field'; rmField.style.cssText = 'justify-content:flex-end;padding-top:18px';
+        rmField.className = 'order-field order-field-full'; rmField.style.cssText = 'justify-content:flex-end;align-items:flex-end;padding-top:18px';
         const rmBtn = document.createElement('button');
         rmBtn.className = 'btn-remove-row'; rmBtn.innerHTML = '&#10005;';
         rmBtn.onclick = (function(cid,rid){ return function(){ removeRow(cid,rid); }; })(id,row.id);
@@ -1063,6 +1075,16 @@ function renderOrder() {
 
 function toggleSizeChart(){ document.getElementById('sizeChartInner').classList.toggle('open'); }
 
+// Country toggle — replaces the old dropdown with a two-button selector,
+// defaulting to Malaysia. selectedCountry is read directly by submitOrder().
+let selectedCountry = 'Malaysia';
+function setCountry(c) {
+  selectedCountry = c;
+  document.querySelectorAll('#countryToggle .pos-btn').forEach(function(btn) {
+    btn.classList.toggle('selected', btn.dataset.country === c);
+  });
+}
+
 // Opens the size guide modal scoped to 'adult' or 'kids'. Both share the same
 // modal shell; only the image/table swapped inside it.
 function openSizeModal(type) {
@@ -1105,7 +1127,7 @@ async function submitOrder() {
   const city = document.getElementById('custCity').value.trim();
   const postcode = document.getElementById('custPostcode').value.trim();
   const state = document.getElementById('custState').value.trim();
-  const country = document.getElementById('custCountry').value;
+  const country = selectedCountry;
   const notes = document.getElementById('extraNotes').value.trim();
   const keys = Object.keys(sel);
 
@@ -1168,9 +1190,10 @@ async function submitOrder() {
     await fetch(SCRIPT_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
     showToast('Order submitted! We will be in touch soon.');
     sel = {}; renderDesigns(); renderOrder();
-    ['custName','custEmail','custPhone','custAddr1','custAddr2','custCity','custPostcode','custState','custCountry','extraNotes'].forEach(function(id) {
+    ['custName','custEmail','custPhone','custAddr1','custAddr2','custCity','custPostcode','custState','extraNotes'].forEach(function(id) {
       document.getElementById(id).value = '';
     });
+    setCountry('Malaysia');
   } catch(err) {
     alert('Something went wrong. Please try again.');
   } finally {
@@ -1186,9 +1209,9 @@ function showToast(msg){
 
 // Form auto-close: cutoff is fixed to Malaysia time (UTC+8) regardless of the
 // visitor's own timezone, so the form closes at the same real-world moment for
-// everyone. Set to the instant 29 Sept 2026 begins in MYT — i.e. the form stays
-// open through all of 28 Sept and closes right after that midnight.
-const FORM_CLOSE_AT = new Date('2026-09-29T00:00:00+08:00');
+// everyone. Set to the instant 28 Sept 2026 begins in MYT — i.e. the form stays
+// open through all of 27 Sept and closes right after that midnight.
+const FORM_CLOSE_AT = new Date('2026-09-28T00:00:00+08:00');
 if (Date.now() >= FORM_CLOSE_AT.getTime()) {
   document.getElementById('formContent').style.display = 'none';
   document.getElementById('formClosedMessage').style.display = 'block';
