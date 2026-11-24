@@ -1,0 +1,4 @@
+# Private: keep off the public repo / GitHub Pages
+CLAUDE.md
+apps-script/
+.DS_Store
